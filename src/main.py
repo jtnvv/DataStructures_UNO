@@ -6,7 +6,7 @@ for i in test:
     deckTest.PushBack(i)
 deckTest.DeckPrint()
 print()
-print("Ahora vuelto mierda")
+print("Ahora mezclado")
 deckTest.DeckShuffle()
 print()
 deckTest.DeckPrint()
