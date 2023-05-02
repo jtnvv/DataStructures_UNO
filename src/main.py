@@ -3,7 +3,6 @@ import sys
 import os
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 sys.path.append(ruta_carpeta1)
-print(sys.path)
 import DatosDePrueba
 deckTest = mainDeck.MainDeck(len(DatosDePrueba.data_array))
 for i in DatosDePrueba.data_array:
