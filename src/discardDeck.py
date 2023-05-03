@@ -49,7 +49,7 @@ class DiscardDeck:
     return self.head.data
   
   def is_full(self):
-    if self.num_cards == 10:
+    if self.num_cards == 50:
       top = self.tail.data
       self.empty()
       self.Enqueue(top)
