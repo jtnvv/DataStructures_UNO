@@ -1,6 +1,6 @@
-import MainDeck
-import DiscardDeck
-import PlayerDeck
+import mainDeck
+import discardDeck
+import playerDeck
 import sys
 import os
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
