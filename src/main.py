@@ -1,12 +1,13 @@
-import mainDeck
-import discardDeck
+import MainDeck
+import DiscardDeck
+import PlayerDeck
 import sys
 import os
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 sys.path.append(ruta_carpeta1)
 import DatosDePrueba
 def MainDeckTest(test):
-    deckTest = mainDeck.MainDeck(len(test))
+    deckTest = MainDeck.MainDeck(len(test))
     for i in test:
         deckTest.PushBack(i)
     deckTest.DeckPrint()
@@ -15,15 +16,27 @@ def MainDeckTest(test):
     deckTest.DeckShuffle()
     print()
     deckTest.DeckPrint()
+    print()
+    print()
+    return deckTest
 
 def DiscardDeckTest(test):
-    deckTest = discardDeck.DiscardDeck()
+    deckTest = DiscardDeck.DiscardDeck()
     for i in test:
         deckTest.Enqueue(i)
     print()
     deckTest.printDeck()
         
+def PlayerDeckTestDeal(test):
+    main_Deck = MainDeckTest(test)
+    deckTest = PlayerDeck.PlayerDeck()
+    for i in range(7):
+        card = main_Deck.PopBack()
+        deckTest.add_card(card)
+    deckTest.deckPrint()
 
+test_arr = DatosDePrueba.data_array
+    
 
 
 
