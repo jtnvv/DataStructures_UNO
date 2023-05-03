@@ -15,15 +15,15 @@ class DiscardDeck:
     return self.head == None
 
   def Enqueue(self,key):
-    node = Node(key)
-    if (self.tail == None):
-      self.tail = node
-      self.head = self.tail
-    else:
-      self.tail.next = node
-      self.tail = node
-    self.num_cards += 1
-    return
+      node = Node(key)
+      if (self.tail == None):
+        self.tail = node
+        self.head = self.tail
+      else:
+        self.tail.next = node
+        self.tail = node
+      self.num_cards += 1
+      self.is_full()
 
   def Dequeue(self):
     if self.is_empty():
@@ -39,7 +39,7 @@ class DiscardDeck:
     if self.is_empty():
       print("Deck is empty.")
       return
-
+    
     current_node = self.head
     while current_node:
       print(current_node.data)
