@@ -7,7 +7,7 @@ ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'd
 sys.path.append(ruta_carpeta1)
 import DatosDePrueba
 def MainDeckTest(test):
-    deckTest = MainDeck.MainDeck(len(test))
+    deckTest = mainDeck.MainDeck(len(test))
     for i in test:
         deckTest.PushBack(i)
     deckTest.DeckPrint()
@@ -21,7 +21,7 @@ def MainDeckTest(test):
     return deckTest
 
 def DiscardDeckTest(test):
-    deckTest = DiscardDeck.DiscardDeck()
+    deckTest = discardDeck.DiscardDeck()
     for i in test:
         deckTest.Enqueue(i)
     print()
@@ -29,7 +29,7 @@ def DiscardDeckTest(test):
         
 def PlayerDeckTestDeal(test):
     main_Deck = MainDeckTest(test)
-    deckTest = PlayerDeck.PlayerDeck()
+    deckTest = playerDeck.PlayerDeck()
     for i in range(7):
         card = main_Deck.PopBack()
         deckTest.add_card(card)
