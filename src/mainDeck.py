@@ -19,10 +19,13 @@ class MainDeck:
       self.list_size += 1
 
   def PopBack(self):
+    item = self.lista[self.list_size-1]
     self.lista[self.list_size-1]=None
     self.list_size -=1
     if self.list_size < 0:
       self.list_size=0
+    return item
+  
   def PushFront(self,key):
     if self.Full():
       return print("Baraja Completa")
@@ -40,3 +43,5 @@ class MainDeck:
   def DeckPrint(self):
     for i in range(self.list_size):
       print(self.lista[i], end=" ")
+
+

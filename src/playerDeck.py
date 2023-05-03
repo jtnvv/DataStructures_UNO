@@ -3,7 +3,7 @@ class Node:
         self.card = card
         self.next = next
 
-class playerDeck:
+class PlayerDeck:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -37,3 +37,9 @@ class playerDeck:
                 self.tail = curr_node
             return card
         return None
+    
+    def deckPrint(self):
+        curr_node = self.head
+        while curr_node is not None:
+            print(curr_node.card)
+            curr_node = curr_node.next
