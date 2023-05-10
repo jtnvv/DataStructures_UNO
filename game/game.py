@@ -8,6 +8,7 @@ class Game():
         monitor_info = pygame.display.Info()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
+        self.RIGHT_KEY, self.LEFT_KEY = False, False
         self.DISPLAY_W, self.DISPLAY_H = monitor_info.current_w, monitor_info.current_h
         #self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
@@ -22,6 +23,11 @@ class Game():
         self.font_size_text = int((self.DISPLAY_W + self.DISPLAY_H)/60)
         self.font_size_title = int((self.DISPLAY_W + self.DISPLAY_H)/40)
         self.font_size_cursor = int((self.DISPLAY_W + self.DISPLAY_H)/70)
+        self.volumen = 100
+        self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
+        self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
+        pygame.mixer.music.set_volume(self.volumen/100)
+        pygame.mixer.music.play(-1)
 
     def game_loop(self):
         while self.playing:
@@ -39,6 +45,7 @@ class Game():
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.mixer.music.stop()
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False
             if event.type == pygame.KEYDOWN:

@@ -1,4 +1,5 @@
 import pygame
+import os
 
 class Menu():
     def __init__(self, game):
@@ -8,6 +9,10 @@ class Menu():
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - self.game.DISPLAY_W // 6
         self.posicion = self.game.DISPLAY_H // 8
+        self.offset2 = - self.game.DISPLAY_W // 4
+        self.offset3 = - self.game.DISPLAY_W // 6
+        self.game.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
+        self.game.musica = pygame.mixer.music.load(os.path.join(self.game.ruta_musica,'main_menu.mp3'))
 
     def draw_cursor(self):
         self.game.draw_text('*', self.game.font_size_cursor, self.cursor_rect.x, self.cursor_rect.y)
@@ -26,7 +31,7 @@ class MainMenu(Menu):
         self.creditos_x, self.creditos_y = self.mid_w, self.posicion*5
         self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*6
         self.cursor_rect.midtop = (self.singleplayer_x + self.offset, self.singleplayer_y)
-
+        
 
     def display_menu(self):
         self.run_display = True
@@ -90,9 +95,16 @@ class OptionesMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = 'Volumen'
-        self.vol_x, self.vol_y = self.mid_w, self.posicion*3
-        self.resolucion_x, self.resolucion_y = self.mid_w, self.posicion*4
-        self.cursor_rect.midtop = (self.vol_x + self.offset, self.vol_y)
+        self.vol_x, self.vol_y = self.mid_w + self.offset2, self.posicion*3
+        self.resolucion_x, self.resolucion_y = self.mid_w + self.offset2, self.posicion*4
+        self.cursor_rect.midtop = (self.vol_x , self.vol_y)
+
+    def draw_opciones(self, text, size, x, y):
+        font = pygame.font.Font(self.game.font_name,size)
+        text_surface = font.render(text, True, self.game.WHITE)
+        text_rect = (x,y)
+        self.game.display.blit(text_surface,text_rect)
+
 
     def display_menu(self):
         self.run_display = True
@@ -101,25 +113,35 @@ class OptionesMenu(Menu):
             self.check_input()
             self.game.display.fill((0, 0, 0))
             self.game.draw_text('Opciones', self.game.font_size_title, self.game.DISPLAY_W / 2, self.posicion)
-            self.game.draw_text("Volumen", self.game.font_size_text, self.vol_x, self.vol_y)
-            self.game.draw_text("Resolucion", self.game.font_size_text, self.resolucion_x, self.resolucion_y)
+            self.draw_opciones("Volumen", self.game.font_size_text, self.vol_x, self.vol_y)
+            self.draw_opciones(str(self.game.volumen), self.game.font_size_text, self.vol_x - (self.offset3 * 2), self.vol_y )
+            self.draw_opciones("Resolucion", self.game.font_size_text, self.resolucion_x, self.resolucion_y)
+            self.draw_opciones(str(str(self.game.DISPLAY_W) + 'x' + str(self.game.DISPLAY_H)), self.game.font_size_text, self.resolucion_x - (self.offset3 * 2), self.resolucion_y)
             self.draw_cursor()
             self.blit_screen()
 
     def check_input(self):
+        
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
         elif self.game.UP_KEY or self.game.DOWN_KEY:
             if self.state == 'Volumen':
                 self.state = 'Resolucion'
-                self.cursor_rect.midtop = (self.resolucion_x + self.offset, self.resolucion_y)
+                self.cursor_rect.midtop = (self.resolucion_x, self.resolucion_y)
             elif self.state == 'Resolucion':
                 self.state = 'Volumen'
-                self.cursor_rect.midtop = (self.vol_x + self.offset, self.vol_y)
+                self.cursor_rect.midtop = (self.vol_x, self.vol_y)
         elif self.game.START_KEY:
-            
-            pass
+            pygame.mixer.music.set_volume(self.game.volumen/100)
+        elif self.game.LEFT_KEY:
+            if self.state == 'Volumen':
+                if self.game.volumen > 0:
+                    self.game.volumen -= 10
+        elif self.game.RIGHT_KEY:
+            if self.state == 'Volumen':
+                if self.game.volumen < 100:
+                    self.game.volumen += 10
 
 class CreditosMenu(Menu):
     def __init__(self, game):
