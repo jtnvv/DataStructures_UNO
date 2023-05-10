@@ -72,3 +72,15 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
+
+    def draw_image_centerx(self, ruta, size,y):
+        imagen = pygame.image.load(ruta)
+        width, height = imagen.get_size()
+        w_redimensionado = width*size
+        h_redimensionado = height*size
+        new_width = int(w_redimensionado*(self.DISPLAY_W)/17000)
+        new_height = int(h_redimensionado*(self.DISPLAY_H)/10000)
+        imagen_redimensionada = pygame.transform.scale(imagen, (new_width, new_height))
+        img_x = (self.DISPLAY_W - new_width) // 2
+        self.display.blit(imagen_redimensionada, (img_x,y))
+        

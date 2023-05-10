@@ -26,10 +26,10 @@ class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = "Un Jugador"
-        self.singleplayer_x, self.singleplayer_y = self.mid_w, self.posicion*3
-        self.optiones_x, self.optiones_y = self.mid_w, self.posicion*4
-        self.creditos_x, self.creditos_y = self.mid_w, self.posicion*5
-        self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*6
+        self.singleplayer_x, self.singleplayer_y = self.mid_w, self.posicion*4
+        self.optiones_x, self.optiones_y = self.mid_w, self.posicion*5
+        self.creditos_x, self.creditos_y = self.mid_w, self.posicion*6
+        self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*7
         self.cursor_rect.midtop = (self.singleplayer_x + self.offset, self.singleplayer_y)
         
 
@@ -39,7 +39,10 @@ class MainMenu(Menu):
             self.game.check_events()
             self.check_input()
             self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('UNO', self.game.font_size_title, self.game.DISPLAY_W / 2, self.posicion)
+            ruta_logo = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'icono'))
+            logo = (os.path.join(ruta_logo,'logo.png'))
+            self.game.draw_image_centerx(logo,1,self.posicion)
+            #self.game.draw_text('UNO', self.game.font_size_title, self.game.DISPLAY_W / 2, self.posicion)
             self.game.draw_text("Un Jugador", self.game.font_size_text, self.singleplayer_x, self.singleplayer_y)
             self.game.draw_text("Opciones", self.game.font_size_text, self.optiones_x, self.optiones_y)
             self.game.draw_text("Creditos", self.game.font_size_text, self.creditos_x, self.creditos_y)
@@ -98,7 +101,7 @@ class OptionesMenu(Menu):
         self.vol_x, self.vol_y = self.mid_w + self.offset2, self.posicion*3
         self.resolucion_x, self.resolucion_y = self.mid_w + self.offset2, self.posicion*4
         self.cursor_rect.midtop = (self.vol_x , self.vol_y)
-
+  
     def draw_opciones(self, text, size, x, y):
         font = pygame.font.Font(self.game.font_name,size)
         text_surface = font.render(text, True, self.game.WHITE)
@@ -133,15 +136,22 @@ class OptionesMenu(Menu):
                 self.state = 'Volumen'
                 self.cursor_rect.midtop = (self.vol_x, self.vol_y)
         elif self.game.START_KEY:
-            pygame.mixer.music.set_volume(self.game.volumen/100)
+            
+            pass
         elif self.game.LEFT_KEY:
             if self.state == 'Volumen':
                 if self.game.volumen > 0:
                     self.game.volumen -= 10
+                    pygame.mixer.music.set_volume(self.game.volumen/100)
+            elif self.state == 'Resolucion':
+                if self.game.DISPLAY_W > 800 and self.game.DISPLAY_H > 600:
+                    self.game.DISPLAY_W = 1
+                    
         elif self.game.RIGHT_KEY:
             if self.state == 'Volumen':
                 if self.game.volumen < 100:
                     self.game.volumen += 10
+                    pygame.mixer.music.set_volume(self.game.volumen/100)
 
 class CreditosMenu(Menu):
     def __init__(self, game):
