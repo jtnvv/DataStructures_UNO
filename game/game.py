@@ -1,6 +1,6 @@
 import pygame
+import os
 from menu import *
-
 
 class Game():
     def __init__(self):
@@ -12,7 +12,8 @@ class Game():
         #self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
-        self.font_name = 'fonts/8-BIT WONDER.TTF'
+        ruta_capeta_font = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'fonts'))
+        self.font_name = os.path.join(ruta_capeta_font,'8-BIT WONDER.TTF')
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
         self.main_menu = MainMenu(self)
         self.optiones = OptionesMenu(self)
