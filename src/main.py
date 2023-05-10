@@ -36,7 +36,10 @@ def PlayerDeckTestDeal(test):
     deckTest.deckPrint()
 
 test_arr = DatosDePrueba.data_array
-    
+
+#MainDeckTest(test_arr)
+#DiscardDeckTest(test_arr)
+#PlayerDeckTestDeal(test_arr)
 
 
 
