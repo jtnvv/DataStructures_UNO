@@ -12,6 +12,7 @@ class Load():
         self.tiempo_actual = 0.0
         self.barra_carga = pygame.Rect(self.offset, self.cordy, self.weight , self.offset/4)
         pygame.mixer.music.stop()
+        self.size_text = int(self.game.DISPLAY_H/10)
 
     def display_load(self):
         self.run_display = True
@@ -20,6 +21,7 @@ class Load():
                 if event.type == pygame.QUIT:
                     self.game.running = False
             self.game.display.fill(self.game.BLACK)
+            self.game.draw_text("Cargando", self.size_text, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
             self.posicion_carga = int((self.tiempo_actual / self.tiempo_carga) * self.barra_carga.width)
             pygame.draw.rect(self.game.display, self.game.WHITE, self.barra_carga)
             pygame.draw.rect(self.game.display, self.game.RED, (self.barra_carga.left, 

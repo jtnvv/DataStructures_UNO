@@ -3,6 +3,7 @@ import os
 from menu import *
 from uno import *
 from load_screen import *
+from end_screen import *
 
 class Game():
     def __init__(self):
@@ -38,6 +39,8 @@ class Game():
             break
         while self.playing:
             self.a = self.prueba.display_game()
+            if self.playing == False:
+                self.end_window = End(self).display_end()
 
     def check_events(self):
         for event in pygame.event.get():

@@ -36,7 +36,7 @@ class Uno():
             self.draw_decks()
             #self.draw_discard_deck()
             #self.draw_main_deck()
-            #self.dt = self.clock.tick(60) / 1000
+            self.dt = self.clock.tick(60) / 1000
             self.blit_screen()
             
     def chech_input(self):
@@ -54,8 +54,12 @@ class Uno():
                 self.select_card -=1
             else:
                 self.select_card = self.deck1.size
-        #if keys[pygame.K_UP]:
-            #self.player_pos.x -= 300 * self.dt
+        if self.game.START_KEY:
+            self.select_card = 1
+            if self.turno < self.players:
+                self.turno += 1
+            else:
+                self.turno = 1
     
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
@@ -84,7 +88,7 @@ class Uno():
                         carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                         pos_x = mazo_pos_x + i * self.max_weight/3
                         if i == self.select_card:
-                            pos_y = mazo_pos_y - (3*self.max_height/4)
+                            pos_y = (mazo_pos_y - (3*self.max_height/4)) 
                         else:
                             pos_y = mazo_pos_y
                         self.game.display.blit(carta, (pos_x,pos_y))
@@ -113,7 +117,7 @@ class Uno():
                         rotated_carta = pygame.transform.rotate(carta, 90)
                         pos_y = mazo_pos_y - i * self.max_weight/3
                         if i == self.select_card:
-                            pos_x = mazo_pos_x + self.max_height
+                            pos_x = mazo_pos_x - (3*self.max_height/4)
                         else:
                             pos_x = mazo_pos_x
                         self.game.display.blit(rotated_carta, (pos_x,pos_y))
@@ -142,7 +146,7 @@ class Uno():
                         carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                         pos_x = mazo_pos_x + i * self.max_weight/3
                         if i == self.select_card:
-                            pos_y = mazo_pos_y + self.max_height
+                            pos_y = mazo_pos_y + (3*self.max_height/4)
                         else:
                             pos_y = mazo_pos_y
                         self.game.display.blit(carta, (pos_x,pos_y))
@@ -164,13 +168,13 @@ class Uno():
                 mazo_width = self.max_weight * sizedeck
                 mazo_height = self.max_height
                 mazo_pos_x = self.offsetx
-                mazo_pos_y = (self.game.DISPLAY_H/2) + (mazo_width/6)
+                mazo_pos_y = (self.game.DISPLAY_H/2) - (mazo_width/6)
                 if i == self.turno:
                     for i in range(1,sizedeck+1):
                         carta = pygame.image.load(eval(puntero.card["image"]))
                         carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                         rotated_carta = pygame.transform.rotate(carta, 270)
-                        pos_y = mazo_pos_y - i * self.max_weight/3
+                        pos_y = mazo_pos_y + i * self.max_weight/3
                         if i == self.select_card:
                             pos_x = mazo_pos_x + self.max_height
                         else:
@@ -181,8 +185,8 @@ class Uno():
                     for i in range(1,sizedeck+1):
                         carta = pygame.image.load(eval(puntero.card["image"]))
                         carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        rotated_carta = pygame.transform.rotate(carta, 90)
-                        pos_y = mazo_pos_y - i * self.max_weight/3
+                        rotated_carta = pygame.transform.rotate(carta, 270)
+                        pos_y = mazo_pos_y + i * self.max_weight/3
                         pos_x = mazo_pos_x
                         self.game.display.blit(rotated_carta, (pos_x,pos_y))
                         puntero = puntero.next
