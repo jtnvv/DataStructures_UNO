@@ -46,3 +46,6 @@ class PlayerDeck:
         while curr_node is not None:
             print(curr_node.card)
             curr_node = curr_node.next
+
+    def deck_size(self):
+        return self.size

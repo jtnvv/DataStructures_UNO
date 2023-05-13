@@ -1,7 +1,7 @@
 import pygame
 import os
 from menu import *
-from prueba import *
+from uno import *
 from load_screen import *
 
 class Game():
@@ -22,7 +22,6 @@ class Game():
         self.main_menu = MainMenu(self)
         self.optiones = OptionesMenu(self)
         self.creditos = CreditosMenu(self)
-        self.prueba = Prueba(self)
         self.curr_menu = self.main_menu
         self.font_size_text = int((self.DISPLAY_W + self.DISPLAY_H)/60)
         self.font_size_title = int((self.DISPLAY_W + self.DISPLAY_H)/40)
@@ -33,12 +32,12 @@ class Game():
         #pygame.mixer.music.play(-1)
 
     def game_loop(self):
-        self.prueba = Prueba(self)
+        self.prueba = Uno(self)
         while self.playing:
             self.load_window = Load(self).display_load()
             break
         while self.playing:
-            self.a = self.prueba.dibujar()
+            self.a = self.prueba.display_game()
 
     def check_events(self):
         for event in pygame.event.get():

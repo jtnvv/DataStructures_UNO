@@ -7,19 +7,19 @@ sys.path.append(ruta_carpeta1)
 import mainDeck, discardDeck, playerDeck
 
 class Generator():
-    def MainDeck(main_deck):
+    def MainDeck(self,main_deck):
         deckTest = mainDeck.MainDeck(len(main_deck))
         for i in main_deck:
             deckTest.PushBack(i)
         deckTest.DeckShuffle()
         return deckTest
     
-    def DiscardDeck(main_deck):
+    def DiscardDeck(self,main_deck):
         deckTest = discardDeck.DiscardDeck()
         deckTest.Enqueue(main_deck.PopBack())
         return deckTest
 
-    def PlayerDeck(main_deck):
+    def PlayerDeck(self,main_deck):
         player_deck = playerDeck.PlayerDeck()
         for i in range (7):
             player_deck.add_card(main_deck.PopBack())
