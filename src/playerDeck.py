@@ -39,7 +39,6 @@ class PlayerDeck:
             if curr_node.next is None:
                 self.tail = curr_node
             return card
-        return None
     
     def deckPrint(self):
         curr_node = self.head

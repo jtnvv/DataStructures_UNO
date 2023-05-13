@@ -46,7 +46,7 @@ class DiscardDeck:
       current_node = current_node.next
   
   def LastCardPlayed(self):
-    return self.head.data
+    return self.tail.data
   
   def is_full(self):
     if self.num_cards == 50:

@@ -16,7 +16,7 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = monitor_info.current_w, monitor_info.current_h
         #self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
-        self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
+        self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H),pygame.FULLSCREEN)
         ruta_capeta_font = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'fonts'))
         self.font_name = os.path.join(ruta_capeta_font,'8-BIT WONDER.TTF')
         self.BLACK, self.WHITE, self.RED = (0, 0, 0), (255, 255, 255), (255, 0, 0)
@@ -84,3 +84,9 @@ class Game():
         img_x = (self.DISPLAY_W - new_width) // 2
         self.display.blit(imagen_redimensionada, (img_x,y))
         
+    def draw_center_text(self, text, size, x, y ):
+        font = pygame.font.Font(self.font_name,size)
+        text_surface = font.render(text, True, self.BLACK)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (x,y)
+        self.display.blit(text_surface,text_rect)

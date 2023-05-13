@@ -9,8 +9,10 @@ class Menu():
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - self.game.DISPLAY_W // 6
         self.posicion = self.game.DISPLAY_H // 8
+        self.offset_creditos = self.game.DISPLAY_H // 15
         self.offset2 = - self.game.DISPLAY_W // 4
         self.offset3 = - self.game.DISPLAY_W // 6
+        self.size_author = int((self.game.DISPLAY_W + self.game.DISPLAY_H)/80)
         
 
     def draw_cursor(self):
@@ -111,6 +113,7 @@ class OptionesMenu(Menu):
         self.state = 'Volumen'
         self.vol_x, self.vol_y = self.mid_w + self.offset2, self.posicion*3
         self.resolucion_x, self.resolucion_y = self.mid_w + self.offset2, self.posicion*4
+        self.visualizacion_x, self.visualizacion_y = self.mid_w + self.offset2, self.posicion*5
         self.cursor_rect.midtop = (self.vol_x , self.vol_y)
   
     def draw_opciones(self, text, size, x, y):
@@ -131,6 +134,8 @@ class OptionesMenu(Menu):
             self.draw_opciones(str(self.game.volumen), self.game.font_size_text, self.vol_x - (self.offset3 * 2), self.vol_y )
             self.draw_opciones("Resolucion", self.game.font_size_text, self.resolucion_x, self.resolucion_y)
             self.draw_opciones(str(str(self.game.DISPLAY_W) + 'x' + str(self.game.DISPLAY_H)), self.game.font_size_text, self.resolucion_x - (self.offset3 * 2), self.resolucion_y)
+            self.draw_opciones("Visualizacion", self.game.font_size_text, self.visualizacion_x, self.visualizacion_y)
+            #self.draw_opciones("Pantalla completa", int(self.game.font_size_text/2), self.visualizacion_x - (self.offset3 * 2), self.visualizacion_y)
             self.draw_cursor()
             self.blit_screen()
 
@@ -176,6 +181,11 @@ class CreditosMenu(Menu):
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
             self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('Creditos', 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
-            self.game.draw_text('Hecho por Juan', 15, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
+            self.game.draw_text('Creditos', self.game.font_size_title, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - self.posicion)
+            self.game.draw_text('Hecho por', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2)
+            self.game.draw_text('Juan Acevedo', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos)
+            self.game.draw_text('Gabriel Delgado', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*2)
+            self.game.draw_text('Juan Ovalle', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*3)
+            self.game.draw_text('David Velasquez', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*4)
+            self.game.draw_text('Jonathan Veloza', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*5)
             self.blit_screen()

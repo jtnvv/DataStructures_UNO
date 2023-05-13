@@ -13,7 +13,7 @@ class End():
                 if event.type == pygame.QUIT:
                     self.game.running = False
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                         self.run_display = False
             self.game.display.fill(self.game.BLACK)
             self.game.draw_text("Gracias por jugar", self.size_text, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
