@@ -1,10 +1,13 @@
 import pygame
 import os
 from menu import *
+from prueba import *
+from load_screen import *
 
 class Game():
     def __init__(self):
         pygame.init()
+        self.volumen = 100
         monitor_info = pygame.display.Info()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
@@ -15,32 +18,27 @@ class Game():
         self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
         ruta_capeta_font = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'fonts'))
         self.font_name = os.path.join(ruta_capeta_font,'8-BIT WONDER.TTF')
-        self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
+        self.BLACK, self.WHITE, self.RED = (0, 0, 0), (255, 255, 255), (255, 0, 0)
         self.main_menu = MainMenu(self)
         self.optiones = OptionesMenu(self)
         self.creditos = CreditosMenu(self)
+        self.prueba = Prueba(self)
         self.curr_menu = self.main_menu
         self.font_size_text = int((self.DISPLAY_W + self.DISPLAY_H)/60)
         self.font_size_title = int((self.DISPLAY_W + self.DISPLAY_H)/40)
         self.font_size_cursor = int((self.DISPLAY_W + self.DISPLAY_H)/70)
-        self.volumen = 100
         self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
-        self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
-        pygame.mixer.music.set_volume(self.volumen/100)
-        pygame.mixer.music.play(-1)
+        #self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
+        #pygame.mixer.music.set_volume(self.volumen/100)
+        #pygame.mixer.music.play(-1)
 
     def game_loop(self):
+        self.prueba = Prueba(self)
         while self.playing:
-            self.check_events()
-            if self.START_KEY:
-                self.playing= False
-            self.display.fill(self.BLACK)
-            self.draw_text('Thanks for Playing', self.font_size_title, self.DISPLAY_W/2, self.DISPLAY_H/2)
-            self.window.blit(self.display, (0,0))
-            pygame.display.update()
-            self.reset_keys()
-
-
+            self.load_window = Load(self).display_load()
+            break
+        while self.playing:
+            self.a = self.prueba.dibujar()
 
     def check_events(self):
         for event in pygame.event.get():

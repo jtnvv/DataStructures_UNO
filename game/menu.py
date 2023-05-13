@@ -11,8 +11,7 @@ class Menu():
         self.posicion = self.game.DISPLAY_H // 8
         self.offset2 = - self.game.DISPLAY_W // 4
         self.offset3 = - self.game.DISPLAY_W // 6
-        self.game.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
-        self.game.musica = pygame.mixer.music.load(os.path.join(self.game.ruta_musica,'main_menu.mp3'))
+        
 
     def draw_cursor(self):
         self.game.draw_text('*', self.game.font_size_cursor, self.cursor_rect.x, self.cursor_rect.y)
@@ -21,6 +20,15 @@ class Menu():
         self.game.window.blit(self.game.display, (0, 0))
         pygame.display.update()
         self.game.reset_keys()
+    
+    def play_music(self):
+        self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
+        self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
+        nombre_cancion = "Mi Canción Favorita"
+        pygame.mixer.music.set_endevent(pygame.USEREVENT)
+        pygame.event.post(pygame.event.Event(pygame.USEREVENT, {"name": nombre_cancion}))     
+        pygame.mixer.music.set_volume(int(self.game.volumen)/100)
+        pygame.mixer.music.play()
 
 class MainMenu(Menu):
     def __init__(self, game):
@@ -31,9 +39,11 @@ class MainMenu(Menu):
         self.creditos_x, self.creditos_y = self.mid_w, self.posicion*6
         self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*7
         self.cursor_rect.midtop = (self.singleplayer_x + self.offset, self.singleplayer_y)
-        
+         
 
     def display_menu(self):
+        if pygame.mixer.music.get_busy() == False:
+            self.play_music()
         self.run_display = True
         while self.run_display:
             self.game.check_events()
@@ -47,6 +57,7 @@ class MainMenu(Menu):
             self.game.draw_text("Opciones", self.game.font_size_text, self.optiones_x, self.optiones_y)
             self.game.draw_text("Creditos", self.game.font_size_text, self.creditos_x, self.creditos_y)
             self.game.draw_text("Salir", self.game.font_size_text, self.cerrar_x, self.cerrar_y)
+            
             self.draw_cursor()
             self.blit_screen()
 
