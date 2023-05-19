@@ -401,3 +401,32 @@ class Uno():
 
             elif card["power"] == "Reverse":
                 self.reverse = not self.reverse
+
+            elif card["power"] == "+4":
+                if self.reverse:
+                    if self.turno == 1:
+                        for i in range(4):
+                            self.deck4.add_card(self.main_deck.PopBack())
+                    elif self.turno == 2:
+                        for i in range(4):
+                            self.deck1.add_card(self.main_deck.PopBack())
+                    elif self.turno == 3:
+                        for i in range(4):
+                            self.deck2.add_card(self.main_deck.PopBack())
+                    elif self.turno == 4:
+                        for i in range(4):
+                            self.deck3.add_card(self.main_deck.PopBack())
+                else:
+                    if self.turno == 1:
+                        for i in range(4):
+                            self.deck2.add_card(self.main_deck.PopBack())
+                    elif self.turno == 2:
+                        for i in range(4):
+                            self.deck3.add_card(self.main_deck.PopBack())
+                    elif self.turno == 3:
+                        for i in range(4):
+                            self.deck4.add_card(self.main_deck.PopBack())
+                    elif self.turno == 4:
+                        for i in range(4):
+                            self.deck1.add_card(self.main_deck.PopBack())
+                
