@@ -138,11 +138,11 @@ class Uno():
                 mazo_pos_x = (self.game.DISPLAY_W / 2) - (mazo_width/2)
                 mazo_pos_y = (self.game.DISPLAY_H - self.offsety) - mazo_height 
                 if i == self.turno:
-                    for i in range(sizedeck):
+                    for j in range(sizedeck):
                         carta = pygame.image.load(eval(puntero.card["image"]))
                         carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        pos_x = mazo_pos_x + i * self.max_weight/3
-                        if i+1 == self.select_card:
+                        pos_x = mazo_pos_x + j * self.max_weight/3
+                        if j+1 == self.select_card:
                             pos_y = (mazo_pos_y - (3*self.max_height/4)) 
                         else:
                             pos_y = mazo_pos_y
@@ -262,47 +262,47 @@ class Uno():
         self.game.display.blit(carta, (imagen_pos_x, imagen_pos_y))
 
     def play_card(self):
-        if self.turno == 1:
-            puntero = self.deck1.head
-            for i in range(self.select_card-1):
-                puntero = puntero.next
-            if self.check_play_card(puntero.card):
-                self.power_card(puntero.card)
-                self.discard_deck.Enqueue(self.deck1.remove_card(puntero.card))
-                return True
-            else:
-                return False
-        elif self.turno == 2:
-            puntero = self.deck2.head
-            for i in range(self.select_card-1):
-                puntero = puntero.next
-            if self.check_play_card(puntero.card):
-                self.power_card(puntero.card)
-                self.discard_deck.Enqueue(self.deck2.remove_card(puntero.card))
-                return True
-            else:
-                return False
-        elif self.turno == 3:
-            puntero = self.deck3.head
-            for i in range(self.select_card-1):
-                puntero = puntero.next
-            if self.check_play_card(puntero.card):
-                self.power_card(puntero.card)
-                self.discard_deck.Enqueue(self.deck3.remove_card(puntero.card))
-                return True
-            else:
-                return False
-        elif self.turno == 4:
-            puntero = self.deck4.head
-            for i in range(self.select_card-1):
-                puntero = puntero.next
-            if self.check_play_card(puntero.card):
-                self.power_card(puntero.card)
-                self.discard_deck.Enqueue(self.deck4.remove_card(puntero.card))
-                return True
-            else:
-                return False
-
+        match self.turno:
+            case 1:
+                puntero = self.deck1.head
+                for i in range(self.select_card - 1):
+                    puntero = puntero.next
+                if self.check_play_card(puntero.card):
+                    self.power_card(puntero.card)
+                    self.discard_deck.Enqueue(self.deck1.remove_card(puntero.card))
+                    return True
+                else:
+                    return False
+            case 2:
+                puntero = self.deck2.head
+                for i in range(self.select_card - 1):
+                    puntero = puntero.next
+                if self.check_play_card(puntero.card):
+                    self.power_card(puntero.card)
+                    self.discard_deck.Enqueue(self.deck2.remove_card(puntero.card))
+                    return True
+                else:
+                    return False
+            case 3:
+                puntero = self.deck3.head
+                for i in range(self.select_card - 1):
+                    puntero = puntero.next
+                if self.check_play_card(puntero.card):
+                    self.power_card(puntero.card)
+                    self.discard_deck.Enqueue(self.deck3.remove_card(puntero.card))
+                    return True
+                else:
+                    return False
+            case 4:
+                puntero = self.deck4.head
+                for i in range(self.select_card - 1):
+                    puntero = puntero.next
+                if self.check_play_card(puntero.card):
+                    self.power_card(puntero.card)
+                    self.discard_deck.Enqueue(self.deck4.remove_card(puntero.card))
+                    return True
+                else:
+                    return False
     def check_winner(self):
         if self.deck1.size == 0:
             self.game.draw_center_text("Jugador 1 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
