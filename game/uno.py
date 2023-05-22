@@ -48,47 +48,49 @@ class Uno():
             self.run_display = False
             self.game.playing = False
         if self.game.RIGHT_KEY:
-            if self.turno == 1:
-                if self.select_card < self.deck1.size:
-                    self.select_card +=1
-                else:
-                    self.select_card = 1
-            elif self.turno == 2:
-                if self.select_card < self.deck2.size:
-                    self.select_card +=1
-                else:
-                    self.select_card = 1
-            elif self.turno == 3:
-                if self.select_card < self.deck3.size:
-                    self.select_card +=1
-                else:
-                    self.select_card = 1
-            elif self.turno == 4:
-                if self.select_card < self.deck4.size:
-                    self.select_card +=1
-                else:
-                    self.select_card = 1
+            match self.turno:
+                case 1:
+                    if self.select_card < self.deck1.size:
+                        self.select_card += 1
+                    else:
+                        self.select_card = 1
+                case 2:
+                    if self.select_card < self.deck2.size:
+                        self.select_card += 1
+                    else:
+                        self.select_card = 1
+                case 3:
+                    if self.select_card < self.deck3.size:
+                        self.select_card += 1
+                    else:
+                        self.select_card = 1
+                case 4:
+                    if self.select_card < self.deck4.size:
+                        self.select_card += 1
+                    else:
+                        self.select_card = 1
         if self.game.LEFT_KEY:
-            if self.turno == 1:
-                if self.select_card > 1:
-                    self.select_card -=1
-                else:
-                    self.select_card = self.deck1.size
-            elif self.turno == 2:
-                if self.select_card > 1:
-                    self.select_card -=1
-                else:
-                    self.select_card = self.deck2.size
-            elif self.turno == 3:
-                if self.select_card > 1:
-                    self.select_card -=1
-                else:
-                    self.select_card = self.deck3.size
-            elif self.turno == 4:
-                if self.select_card > 1:
-                    self.select_card -=1
-                else:
-                    self.select_card = self.deck4.size
+            match self.turno:
+                case 1:
+                    if self.select_card > 1:
+                        self.select_card -= 1
+                    else:
+                        self.select_card = self.deck1.size
+                case 2:
+                    if self.select_card > 1:
+                        self.select_card -= 1
+                    else:
+                        self.select_card = self.deck2.size
+                case 3:
+                    if self.select_card > 1:
+                        self.select_card -= 1
+                    else:
+                        self.select_card = self.deck3.size
+                case 4:
+                    if self.select_card > 1:
+                        self.select_card -= 1
+                    else:
+                        self.select_card = self.deck4.size
         if self.game.START_KEY:
             play = self.play_card()
             if play:

@@ -21,6 +21,7 @@ class cardNode:
 class treePlayerDeck:
     def __init__(self):
       self.root = None
+      self.deckSize = 0
     
     def nodeHeight(self, node):
         if not node:
@@ -53,6 +54,7 @@ class treePlayerDeck:
     #Insert de forma recursiva
     def insert(self,card):
       self.root = self.recInsert(self.root,card)
+      self.deckSize += 1
 
     def recInsert(self, root, card):
         if not root:
@@ -79,11 +81,12 @@ class treePlayerDeck:
         if balance < -1 and card["id"] < root.right.card:
             root.right = self.rightRotate(root.right)
             return self.leftRotate(root)
- 
+
         return root
 
     def delete(self, card):
         self.root = self.recDelete(self.root, card)
+        self.deckSize -= 1
 
     def recDelete(self, root, card):
         if not root:
@@ -152,7 +155,9 @@ cards = DatosDePrueba.data_array
 for i in cards:
     playerTest.insert(i)
 testCard = cardNode(cards[1])
+print(playerTest.deckSize)
 playerTest.inOrderTraversal()
 print()
 playerTest.delete(testCard)
+print(playerTest.deckSize)
 playerTest.inOrderTraversal()
