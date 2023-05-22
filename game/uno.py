@@ -129,122 +129,125 @@ class Uno():
 
     def draw_decks(self):
         for i in range(1, 5):
+            match i:
             #dibujar el primer mazo
-            if i == 1:
-                sizedeck = self.deck1.deck_size()
-                puntero = self.deck1.head
-                mazo_width = ((self.max_weight/3) * (sizedeck-1)) + self.max_weight
-                mazo_height = self.max_height
-                mazo_pos_x = (self.game.DISPLAY_W / 2) - (mazo_width/2)
-                mazo_pos_y = (self.game.DISPLAY_H - self.offsety) - mazo_height 
-                if i == self.turno:
-                    for j in range(sizedeck):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        pos_x = mazo_pos_x + j * self.max_weight/3
-                        if j+1 == self.select_card:
-                            pos_y = (mazo_pos_y - (3*self.max_height/4)) 
-                        else:
+                case 1:
+                    sizedeck = self.deck1.deckSize
+                    arr = self.deck1.inOrderTraversal()
+                    mazo_width = ((self.max_weight/3) * (sizedeck-1)) + self.max_weight
+                    mazo_height = self.max_height
+                    mazo_pos_x = (self.game.DISPLAY_W / 2) - (mazo_width/2)
+                    mazo_pos_y = (self.game.DISPLAY_H - self.offsety) - mazo_height
+                    count = 0 
+                    if i == self.turno:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            pos_x = mazo_pos_x + j * self.max_weight/3
+                            if j+1 == self.select_card:
+                                pos_y = (mazo_pos_y - (3*self.max_height/4)) 
+                            else:
+                                pos_y = mazo_pos_y
+                            self.game.display.blit(carta, (pos_x,pos_y))
+                    else:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            pos_x = mazo_pos_x + j * self.max_weight/3
                             pos_y = mazo_pos_y
-                        self.game.display.blit(carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                else:
-                    for i in range(sizedeck):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        pos_x = mazo_pos_x + i * self.max_weight/3
-                        pos_y = mazo_pos_y
-                        self.game.display.blit(carta, (pos_x,pos_y))
-                        puntero = puntero.next
+                            self.game.display.blit(carta, (pos_x,pos_y))
 
-            #dibujar el segundo mazo
-            if i == 2:
-                sizedeck = self.deck2.deck_size()
-                puntero = self.deck2.head
-                mazo_width = self.max_weight * sizedeck
-                mazo_height = self.max_height
-                mazo_pos_x = self.game.DISPLAY_W - (self.offsetx + mazo_height)
-                mazo_pos_y = (self.game.DISPLAY_H/2) + (mazo_width/6)
-                if i == self.turno:
-                    for i in range(1,sizedeck+1):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        rotated_carta = pygame.transform.rotate(carta, 90)
-                        pos_y = mazo_pos_y - i * self.max_weight/3
-                        if i == self.select_card:
-                            pos_x = mazo_pos_x - (3*self.max_height/4)
-                        else:
+                #dibujar el segundo mazo
+                case 2:
+                    sizedeck = self.deck2.deckSize
+                    arr = self.deck2.inOrderTraversal()
+                    mazo_width = self.max_weight * sizedeck
+                    mazo_height = self.max_height
+                    mazo_pos_x = self.game.DISPLAY_W - (self.offsetx + mazo_height)
+                    mazo_pos_y = (self.game.DISPLAY_H/2) + (mazo_width/6)
+                    count = 0
+                    if i == self.turno:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            rotated_carta = pygame.transform.rotate(carta, 90)
+                            pos_y = mazo_pos_y - j * self.max_weight/3
+                            if j == self.select_card:
+                                pos_x = mazo_pos_x - (3*self.max_height/4)
+                            else:
+                                pos_x = mazo_pos_x
+                            self.game.display.blit(rotated_carta, (pos_x,pos_y))
+                    else:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            rotated_carta = pygame.transform.rotate(carta, 90)
+                            pos_y = mazo_pos_y - j * self.max_weight/3
                             pos_x = mazo_pos_x
-                        self.game.display.blit(rotated_carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                else:
-                    for i in range(1,sizedeck+1):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        rotated_carta = pygame.transform.rotate(carta, 90)
-                        pos_y = mazo_pos_y - i * self.max_weight/3
-                        pos_x = mazo_pos_x
-                        self.game.display.blit(rotated_carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                    
-            #dibujar el tercer mazo
-            if i == 3:
-                sizedeck = self.deck3.deck_size()
-                puntero = self.deck3.head
-                mazo_width = ((self.max_weight/3) * (sizedeck-1)) + self.max_weight
-                mazo_height = self.max_height
-                mazo_pos_x = (self.game.DISPLAY_W/2) - (mazo_width/2)
-                mazo_pos_y = self.offsety
-                if i == self.turno:
-                    for i in range(sizedeck):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        pos_x = mazo_pos_x + i * self.max_weight/3
-                        if i+1 == self.select_card:
-                            pos_y = mazo_pos_y + (3*self.max_height/4)
-                        else:
+                            self.game.display.blit(rotated_carta, (pos_x,pos_y))
+                        
+                #dibujar el tercer mazo
+                case 3:
+                    sizedeck = self.deck3.deckSize
+                    arr = self.deck3.inOrderTraversal()
+                    mazo_width = ((self.max_weight/3) * (sizedeck-1)) + self.max_weight
+                    mazo_height = self.max_height
+                    mazo_pos_x = (self.game.DISPLAY_W/2) - (mazo_width/2)
+                    mazo_pos_y = self.offsety
+                    if i == self.turno:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            pos_x = mazo_pos_x + j * self.max_weight/3
+                            if j+1 == self.select_card:
+                                pos_y = mazo_pos_y + (3*self.max_height/4)
+                            else:
+                                pos_y = mazo_pos_y
+                            self.game.display.blit(carta, (pos_x,pos_y))
+                    else:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            pos_x = mazo_pos_x + j * self.max_weight/3
                             pos_y = mazo_pos_y
-                        self.game.display.blit(carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                else:
-                    for i in range(sizedeck):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        pos_x = mazo_pos_x + i * self.max_weight/3
-                        pos_y = mazo_pos_y
-                        self.game.display.blit(carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                    
+                            self.game.display.blit(carta, (pos_x,pos_y))
+                        
 
-            #dibujar el cuarto mazo
-            if i == 4:
-                sizedeck = self.deck4.deck_size()
-                puntero = self.deck4.head
-                mazo_width = self.max_weight * sizedeck
-                mazo_height = self.max_height
-                mazo_pos_x = self.offsetx
-                mazo_pos_y = (self.game.DISPLAY_H/2) - (mazo_width/6)
-                if i == self.turno:
-                    for i in range(1,sizedeck+1):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        rotated_carta = pygame.transform.rotate(carta, 270)
-                        pos_y = mazo_pos_y + i * self.max_weight/3
-                        if i == self.select_card:
-                            pos_x = mazo_pos_x + self.max_height
-                        else:
+                #dibujar el cuarto mazo
+                case 4:
+                    sizedeck = self.deck4.deckSize
+                    arr = self.deck4.inOrderTraversal()
+                    mazo_width = self.max_weight * sizedeck
+                    mazo_height = self.max_height
+                    mazo_pos_x = self.offsetx
+                    mazo_pos_y = (self.game.DISPLAY_H/2) - (mazo_width/6)
+                    if i == self.turno:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            rotated_carta = pygame.transform.rotate(carta, 270)
+                            pos_y = mazo_pos_y + j * self.max_weight/3
+                            if j == self.select_card:
+                                pos_x = mazo_pos_x + self.max_height
+                            else:
+                                pos_x = mazo_pos_x
+                            self.game.display.blit(rotated_carta, (pos_x,pos_y))
+                    else:
+                        for j in range(sizedeck):
+                            puntero = arr[j]
+                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
+                            rotated_carta = pygame.transform.rotate(carta, 270)
+                            pos_y = mazo_pos_y + j * self.max_weight/3
                             pos_x = mazo_pos_x
-                        self.game.display.blit(rotated_carta, (pos_x,pos_y))
-                        puntero = puntero.next
-                else:
-                    for i in range(1,sizedeck+1):
-                        carta = pygame.image.load(eval(puntero.card["image"]))
-                        carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
-                        rotated_carta = pygame.transform.rotate(carta, 270)
-                        pos_y = mazo_pos_y + i * self.max_weight/3
-                        pos_x = mazo_pos_x
-                        self.game.display.blit(rotated_carta, (pos_x,pos_y))
-                        puntero = puntero.next
+                            self.game.display.blit(rotated_carta, (pos_x,pos_y))
 
     def draw_discard_deck(self):
         card_data = self.discard_deck.LastCardPlayed()
@@ -304,7 +307,7 @@ class Uno():
                 else:
                     return False
     def check_winner(self):
-        if self.deck1.size == 0:
+        if self.deck1.deckSize == 0:
             self.game.draw_center_text("Jugador 1 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
             self.blit_screen()
             while self.game.playing:
@@ -313,7 +316,7 @@ class Uno():
                         if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                             self.game.playing = False
                             self.run_display = False
-        elif self.deck2.size == 0:
+        elif self.deck2.deckSize == 0:
             self.game.draw_center_text("Jugador 2 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
             self.blit_screen()
             while self.game.playing:
@@ -322,7 +325,7 @@ class Uno():
                         if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                             self.game.playing = False
                             self.run_display = False
-        elif self.deck3.size == 0:
+        elif self.deck3.deckSize == 0:
             self.game.draw_center_text("Jugador 3 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
             self.blit_screen()
             while self.game.playing:
@@ -331,7 +334,7 @@ class Uno():
                         if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                             self.game.playing = False
                             self.run_display = False
-        elif self.deck4.size == 0:
+        elif self.deck4.deckSize == 0:
             self.game.draw_center_text("Jugador 4 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
             self.blit_screen()
             while self.game.playing:

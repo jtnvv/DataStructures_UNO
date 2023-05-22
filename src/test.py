@@ -230,11 +230,10 @@ class AVLTree:
 
 myTree = AVLTree()
 
-for i in range (100000+1):
+for i in range (100000000+1):
     root = myTree.insertAVL(i)
 
 start = time.time()
-myTree.deleteAVL(520)
+myTree.deleteAVL(100000000)
 end = time.time()
-print("The time of execution of above program is :",
-      (end-start) * 10**3, "ms")
+print("%.20f"%((end-start)*1000))

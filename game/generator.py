@@ -4,7 +4,7 @@ sys.path.append(ruta_carpeta1)
 import DatosDePrueba
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
 sys.path.append(ruta_carpeta1)
-import mainDeck, discardDeck, playerDeck
+import mainDeck, discardDeck, newPlayerDeck
 
 class Generator():
     def MainDeck(self,main_deck):
@@ -20,9 +20,9 @@ class Generator():
         return deckTest
 
     def PlayerDeck(self,main_deck):
-        player_deck = playerDeck.PlayerDeck()
+        player_deck = newPlayerDeck.PlayerDeck()
         for i in range (7):
-            player_deck.add_card(main_deck.PopBack())
+            player_deck.insert(main_deck.PopBack())
         return player_deck
 
     def generator(self):        

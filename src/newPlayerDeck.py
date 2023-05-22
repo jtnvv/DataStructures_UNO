@@ -3,7 +3,6 @@ import os
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 sys.path.append(ruta_carpeta1)
 import DatosDePrueba
-
 #Clase para las cartas como nodos de un AVL
 #El parámetro "card" debe ser una tupla del json de cartas
 #NO ES UN NÚMERO
@@ -18,7 +17,7 @@ class cardNode:
         self.compID = card["id"]
 
 #Este ya es un AVL clásico
-class treePlayerDeck:
+class PlayerDeck:
     def __init__(self):
       self.root = None
       self.deckSize = 0
@@ -74,11 +73,11 @@ class treePlayerDeck:
         if balance < -1 and card["id"] > root.right.compID:
             return self.leftRotate(root)
  
-        if balance > 1 and card["id"] > root.left.card:
+        if balance > 1 and card["id"] > root.left.compID:
             root.left = self.leftRotate(root.left)
             return self.rightRotate(root)
  
-        if balance < -1 and card["id"] < root.right.card:
+        if balance < -1 and card["id"] < root.right.compID:
             root.right = self.rightRotate(root.right)
             return self.leftRotate(root)
 
@@ -142,22 +141,28 @@ class treePlayerDeck:
         return current
 
     def inOrderTraversal(self):
-        self.recInOrderTraversal(self.root)
+        interfaceArray = []
+        self.recInOrderTraversal(self.root, interfaceArray)
+        return interfaceArray
 
-    def recInOrderTraversal(self, node):
+
+    def recInOrderTraversal(self, node, arr):
         if node:
-            self.recInOrderTraversal(node.left)
-            print(node.compID, end=" ")
-            self.recInOrderTraversal(node.right)
-
-playerTest = treePlayerDeck()
+            self.recInOrderTraversal(node.left, arr)
+            arr.append(node.card)
+            self.recInOrderTraversal(node.right, arr)
+"""
+playerTest = PlayerDeck()
 cards = DatosDePrueba.data_array
 for i in cards:
     playerTest.insert(i)
 testCard = cardNode(cards[1])
 print(playerTest.deckSize)
-playerTest.inOrderTraversal()
+testArr = playerTest.inOrderTraversal()
+print(testArr)
+print(testArr[0])
 print()
 playerTest.delete(testCard)
 print(playerTest.deckSize)
-playerTest.inOrderTraversal()
+"""
+
