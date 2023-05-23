@@ -87,6 +87,7 @@ class Uno():
                     self.change_turn()
         if self.game.UP_KEY:
             self.take_card()
+            self.change_turn()
 
     def change_turn(self):
         if self.reverse: 
@@ -103,7 +104,7 @@ class Uno():
 
     def play_music(self):
         self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
-        self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
+        self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'nice.mp3'))
         pygame.mixer.music.set_volume(int(self.game.volumen)/10)
         pygame.mixer.music.play()
 
@@ -361,60 +362,64 @@ class Uno():
                 self.block = not self.block
             elif itCard["power"] == "+2":
                 if self.reverse:
-                    if self.turno == 0:
-                        for i in range(2):
-                            self.deck4.insert(self.main_deck.PopBack())
-                    elif self.turno == 1:
-                        for i in range(2):
-                            self.deck1.insert(self.main_deck.PopBack())
-                    elif self.turno == 2:
-                        for i in range(2):
-                            self.deck2.insert(self.main_deck.PopBack())
-                    elif self.turno == 3:
-                        for i in range(2):
-                            self.deck3.insert(self.main_deck.PopBack())
+                    match self.turno:
+                        case 0:
+                            for i in range(2):
+                                self.deck4.insert(self.main_deck.PopBack())
+                        case 1:
+                            for i in range(2):
+                                self.deck1.insert(self.main_deck.PopBack())
+                        case 2:
+                            for i in range(2):
+                                self.deck2.insert(self.main_deck.PopBack())
+                        case 3:
+                            for i in range(2):
+                                self.deck3.insert(self.main_deck.PopBack())
                 else:
-                    if self.turno == 0:
-                        for i in range(2):
-                            self.deck2.insert(self.main_deck.PopBack())
-                    elif self.turno == 1:
-                        for i in range(2):
-                            self.deck3.insert(self.main_deck.PopBack())
-                    elif self.turno == 2:
-                        for i in range(2):
-                            self.deck4.insert(self.main_deck.PopBack())
-                    elif self.turno == 3:
-                        for i in range(2):
-                            self.deck1.insert(self.main_deck.PopBack())
+                    match self.turno:
+                        case 0:
+                            for i in range(2):
+                                self.deck2.insert(self.main_deck.PopBack())
+                        case 1:
+                            for i in range(2):
+                                self.deck3.insert(self.main_deck.PopBack())
+                        case 2:
+                            for i in range(2):
+                                self.deck4.insert(self.main_deck.PopBack())
+                        case 3:
+                            for i in range(2):
+                                self.deck1.insert(self.main_deck.PopBack())
 
             elif itCard["power"] == "Reverse":
                 self.reverse = not self.reverse
 
             elif itCard["power"] == "+4":
                 if self.reverse:
-                    if self.turno == 0:
-                        for i in range(4):
-                            self.deck4.insert(self.main_deck.PopBack())
-                    elif self.turno == 1:
-                        for i in range(4):
-                            self.deck1.insert(self.main_deck.PopBack())
-                    elif self.turno == 2:
-                        for i in range(4):
-                            self.deck2.insert(self.main_deck.PopBack())
-                    elif self.turno == 3:
-                        for i in range(4):
-                            self.deck3.insert(self.main_deck.PopBack())
+                    match self.turno:
+                         case 0:
+                            for i in range(4):
+                                self.deck4.insert(self.main_deck.PopBack())
+                         case 1:
+                            for i in range(4):
+                                self.deck1.insert(self.main_deck.PopBack())
+                         case 2:
+                            for i in range(4):
+                                self.deck2.insert(self.main_deck.PopBack())
+                         case 3:
+                            for i in range(4):
+                                self.deck3.insert(self.main_deck.PopBack())
                 else:
-                    if self.turno == 0:
-                        for i in range(4):
-                            self.deck2.insert(self.main_deck.PopBack())
-                    elif self.turno == 1:
-                        for i in range(4):
-                            self.deck3.insert(self.main_deck.PopBack())
-                    elif self.turno == 2:
-                        for i in range(4):
-                            self.deck4.insert(self.main_deck.PopBack())
-                    elif self.turno == 3:
-                        for i in range(4):
-                            self.deck1.insert(self.main_deck.PopBack())
+                    match self.turno:
+                        case 0:
+                            for i in range(4):
+                                self.deck2.insert(self.main_deck.PopBack())
+                        case 1:
+                            for i in range(4):
+                                self.deck3.insert(self.main_deck.PopBack())
+                        case 2:
+                            for i in range(4):
+                                self.deck4.insert(self.main_deck.PopBack())
+                        case 3:
+                            for i in range(4):
+                                self.deck1.insert(self.main_deck.PopBack())
                 
