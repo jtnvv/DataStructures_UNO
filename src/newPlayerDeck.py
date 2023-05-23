@@ -84,10 +84,8 @@ class PlayerDeck:
         return root
 
     def delete(self, card):
-        deleted = card
         self.root = self.recDelete(self.root, card)
         self.deckSize -= 1
-        return deleted
 
     def recDelete(self, root, card):
         if not root:
