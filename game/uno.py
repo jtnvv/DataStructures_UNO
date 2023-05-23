@@ -89,6 +89,19 @@ class Uno():
             self.take_card()
             self.change_turn()
 
+        if self.game.K1:
+            self.discard_deck.currColor = "Red"
+            print(self.discard_deck.currColor)
+        if self.game.K2:
+            self.discard_deck.currColor = "Blue"
+            print(self.discard_deck.currColor)
+        if self.game.K3:
+            self.discard_deck.currColor = "Green"
+            print(self.discard_deck.currColor)
+        if self.game.K4:
+            self.discard_deck.currColor = "Yellow"
+            print(self.discard_deck.currColor)
+
     def change_turn(self):
         if self.reverse: 
             count = self.turno - 1
@@ -394,6 +407,7 @@ class Uno():
                 self.reverse = not self.reverse
 
             elif itCard["power"] == "+4":
+
                 if self.reverse:
                     match self.turno:
                          case 0:

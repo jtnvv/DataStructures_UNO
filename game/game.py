@@ -13,6 +13,7 @@ class Game():
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.RIGHT_KEY, self.LEFT_KEY = False, False
+        self.K1, self.K2, self.K3, self.K4 = False, False, False, False
         self.DISPLAY_W, self.DISPLAY_H = monitor_info.current_w, monitor_info.current_h
         #self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
@@ -61,10 +62,19 @@ class Game():
                     self.LEFT_KEY = True
                 if event.key == pygame.K_UP:
                     self.UP_KEY = True
+                if event.key == pygame.K_KP1:
+                    self.K1 = True
+                if event.key == pygame.K_KP2:
+                    self.K2 = True
+                if event.key == pygame.K_KP3:
+                    self.K3 = True
+                if event.key == pygame.K_KP4:
+                    self.K4 = True
 
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.RIGHT_KEY, self.LEFT_KEY = False, False
+        self.K1, self.K2, self.K3, self.K4 = False, False, False, False
 
     def draw_text(self, text, size, x, y ):
         font = pygame.font.Font(self.font_name,size)
