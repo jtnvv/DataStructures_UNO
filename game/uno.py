@@ -124,7 +124,7 @@ class Uno():
     def play_music(self):
         self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
         self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
-        pygame.mixer.music.set_volume(int(self.game.volumen)/100)
+        pygame.mixer.music.set_volume(int(self.game.volumen)/10)
         pygame.mixer.music.play()
 
     def draw_decks(self):
@@ -138,7 +138,6 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = (self.game.DISPLAY_W / 2) - (mazo_width/2)
                     mazo_pos_y = (self.game.DISPLAY_H - self.offsety) - mazo_height
-                    count = 0 
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
@@ -167,7 +166,6 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = self.game.DISPLAY_W - (self.offsetx + mazo_height)
                     mazo_pos_y = (self.game.DISPLAY_H/2) + (mazo_width/6)
-                    count = 0
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
@@ -269,42 +267,46 @@ class Uno():
         match self.turno:
             case 1:
                 arr = self.deck1.inOrderTraversal()
-                for i in range(self.select_card):
+                global puntero
+                for i in range(1,self.select_card):
                     puntero = arr[i]
-                    print(type(puntero))
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    self.discard_deck.Enqueue(self.deck1.delete(puntero.card))
+                    disCard = self.deck1.delete(puntero).card
+                    self.discard_deck.Enqueue(disCard)
                     return True
                 else:
                     return False
             case 2:
                 arr = self.deck2.inOrderTraversal()
-                for i in range(self.select_card):
+                for i in range(1,self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    self.discard_deck.Enqueue(self.deck2.delete(puntero))
+                    disCard = self.deck2.delete(puntero).card
+                    self.discard_deck.Enqueue(disCard)
                     return True
                 else:
                     return False
             case 3:
                 arr = self.deck3.inOrderTraversal()
-                for i in range(self.select_card):
+                for i in range(1,self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    self.discard_deck.Enqueue(self.deck3.delete(puntero))
+                    disCard = self.deck3.delete(puntero).card
+                    self.discard_deck.Enqueue(disCard)
                     return True
                 else:
                     return False
             case 4:
                 arr = self.deck4.inOrderTraversal()
-                for i in range(self.select_card):
+                for i in range(1,self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    self.discard_deck.Enqueue(self.deck4.delete(puntero))
+                    disCard = self.deck4.delete(puntero).card
+                    self.discard_deck.Enqueue(disCard)
                     return True
                 else:
                     return False
@@ -348,15 +350,16 @@ class Uno():
         
     def check_play_card(self,card):
         discardCard = self.discard_deck.LastCardPlayed()
-        if "number" in card and "number" in discardCard:
-            if card["number"] == discardCard["number"] or card["color"] == discardCard["color"]:
+        itCard = card.card
+        if "number" in itCard and "number" in discardCard:
+            if itCard["number"] == discardCard["number"] or itCard["color"] == discardCard["color"]:
                 return True
             else:
                 return False
-        elif card["color"] == "Black" or card["color"] == discardCard["color"]:
+        elif itCard["color"] == "Black" or itCard["color"] == discardCard["color"]:
             return True
-        elif "power" in card and "power" in discardCard:
-            if card["power"] == discardCard["power"]:
+        elif "power" in itCard and "power" in discardCard:
+            if itCard["power"] == discardCard["power"]:
                 return True
             else:
                 return False
@@ -376,10 +379,11 @@ class Uno():
                 self.deck4.insert(card)
 
     def power_card(self,card):
-        if "power" in card:
-            if card["power"] == "Block":
+        itCard = card.card
+        if "power" in itCard:
+            if itCard["power"] == "Block":
                 self.block = not self.block
-            elif card["power"] == "+2":
+            elif itCard["power"] == "+2":
                 if self.reverse:
                     if self.turno == 1:
                         for i in range(2):
@@ -407,10 +411,10 @@ class Uno():
                         for i in range(2):
                             self.deck1.insert(self.main_deck.PopBack())
 
-            elif card["power"] == "Reverse":
+            elif itCard["power"] == "Reverse":
                 self.reverse = not self.reverse
 
-            elif card["power"] == "+4":
+            elif itCard["power"] == "+4":
                 if self.reverse:
                     if self.turno == 1:
                         for i in range(4):

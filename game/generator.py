@@ -17,7 +17,11 @@ class Generator():
     def DiscardDeck(self,main_deck):
         deckTest = discardDeck.DiscardDeck()
         card = main_deck.PopBack()
-        deckTest.Enqueue(card)
+        if card["color"] == "Black":
+            deckTest.Enqueue(card)
+            deckTest.Enqueue(main_deck.PopBack())
+        else:
+            deckTest.Enqueue(card)
         return deckTest
 
     def PlayerDeck(self,main_deck):
