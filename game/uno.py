@@ -10,7 +10,7 @@ class Uno():
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.run_display = True
-        self.select_card = 1
+        self.select_card = 0
         self.size_deck = 0
         self.turno = 1
         self.players = 4
@@ -50,51 +50,51 @@ class Uno():
         if self.game.RIGHT_KEY:
             match self.turno:
                 case 1:
-                    if self.select_card < self.deck1.deckSize:
+                    if self.select_card < self.deck1.deckSize-1:
                         self.select_card += 1
                     else:
-                        self.select_card = 1
+                        self.select_card = 0
                 case 2:
-                    if self.select_card < self.deck2.deckSize:
+                    if self.select_card < self.deck2.deckSize-1:
                         self.select_card += 1
                     else:
-                        self.select_card = 1
+                        self.select_card = 0
                 case 3:
-                    if self.select_card < self.deck3.deckSize:
+                    if self.select_card < self.deck3.deckSize-1:
                         self.select_card += 1
                     else:
-                        self.select_card = 1
+                        self.select_card = 0
                 case 4:
-                    if self.select_card < self.deck4.deckSize:
+                    if self.select_card < self.deck4.deckSize-1:
                         self.select_card += 1
                     else:
-                        self.select_card = 1
+                        self.select_card = 0
         if self.game.LEFT_KEY:
             match self.turno:
                 case 1:
-                    if self.select_card > 1:
+                    if self.select_card > 0:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck1.deckSize
+                        self.select_card = self.deck1.deckSize-1
                 case 2:
-                    if self.select_card > 1:
+                    if self.select_card > 0:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck2.deckSize
+                        self.select_card = self.deck2.deckSize-1
                 case 3:
-                    if self.select_card > 1:
+                    if self.select_card > 0:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck3.deckSize
+                        self.select_card = self.deck3.deckSize-1
                 case 4:
-                    if self.select_card > 1:
+                    if self.select_card > 0:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck4.deckSize
+                        self.select_card = self.deck4.deckSize-1
         if self.game.START_KEY:
             play = self.play_card()
             if play:
-                self.select_card = 1
+                self.select_card = 0
                 if self.block:
                     self.change_turn()
                     self.change_turn()
@@ -144,7 +144,7 @@ class Uno():
                             carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
-                            if j+1 == self.select_card:
+                            if j == self.select_card:
                                 pos_y = (mazo_pos_y - (3*self.max_height/4)) 
                             else:
                                 pos_y = mazo_pos_y
@@ -202,7 +202,7 @@ class Uno():
                             carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
-                            if j+1 == self.select_card:
+                            if j == self.select_card:
                                 pos_y = mazo_pos_y + (3*self.max_height/4)
                             else:
                                 pos_y = mazo_pos_y
@@ -267,52 +267,45 @@ class Uno():
         match self.turno:
             case 1:
                 arr = self.deck1.inOrderTraversal()
-                puntero = arr[0]
-                for i in range(self.select_card):
-                    puntero = arr[i]
+                puntero = arr[self.select_card]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    disCard = self.deck1.delete(puntero).card
-                    self.discard_deck.Enqueue(disCard)
+                    disCard = self.deck1.delete(puntero)
+                    self.discard_deck.Enqueue(disCard.card)
                     return True
                 else:
                     return False
             case 2:
                 arr = self.deck2.inOrderTraversal()
-                puntero = arr[0]
-                for i in range(self.select_card):
-                    puntero = arr[i]
+                puntero = arr[self.select_card]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    disCard = self.deck2.delete(puntero).card
-                    self.discard_deck.Enqueue(disCard)
+                    disCard = self.deck2.delete(puntero)
+                    self.discard_deck.Enqueue(disCard.card)
                     return True
                 else:
                     return False
             case 3:
                 arr = self.deck3.inOrderTraversal()
-                puntero = arr[0]
-                for i in range(self.select_card):
-                    puntero = arr[i]
+                puntero = arr[self.select_card]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    disCard = self.deck3.delete(puntero).card
-                    self.discard_deck.Enqueue(disCard)
+                    disCard = self.deck3.delete(puntero)
+                    self.discard_deck.Enqueue(disCard.card)
                     return True
                 else:
                     return False
             case 4:
                 arr = self.deck4.inOrderTraversal()
-                puntero = arr[0]
-                for i in range(self.select_card):
-                    puntero = arr[i]
+                puntero = arr[self.select_card]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
-                    disCard = self.deck4.delete(puntero).card
-                    self.discard_deck.Enqueue(disCard)
+                    disCard = self.deck4.delete(puntero)
+                    self.discard_deck.Enqueue(disCard.card)
                     return True
                 else:
                     return False
+
     def check_winner(self):
         if self.deck1.deckSize == 0:
             self.game.draw_center_text("Jugador 1 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
