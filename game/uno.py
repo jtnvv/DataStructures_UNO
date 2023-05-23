@@ -267,8 +267,8 @@ class Uno():
         match self.turno:
             case 1:
                 arr = self.deck1.inOrderTraversal()
-                global puntero
-                for i in range(1,self.select_card):
+                puntero = arr[0]
+                for i in range(self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
@@ -279,7 +279,8 @@ class Uno():
                     return False
             case 2:
                 arr = self.deck2.inOrderTraversal()
-                for i in range(1,self.select_card):
+                puntero = arr[0]
+                for i in range(self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
@@ -290,7 +291,8 @@ class Uno():
                     return False
             case 3:
                 arr = self.deck3.inOrderTraversal()
-                for i in range(1,self.select_card):
+                puntero = arr[0]
+                for i in range(self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
@@ -301,7 +303,8 @@ class Uno():
                     return False
             case 4:
                 arr = self.deck4.inOrderTraversal()
-                for i in range(1,self.select_card):
+                puntero = arr[0]
+                for i in range(self.select_card):
                     puntero = arr[i]
                 if self.check_play_card(puntero):
                     self.power_card(puntero)
