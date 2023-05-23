@@ -16,7 +16,8 @@ class Generator():
     
     def DiscardDeck(self,main_deck):
         deckTest = discardDeck.DiscardDeck()
-        deckTest.Enqueue(main_deck.PopBack())
+        card = main_deck.PopBack()
+        deckTest.Enqueue(card)
         return deckTest
 
     def PlayerDeck(self,main_deck):
