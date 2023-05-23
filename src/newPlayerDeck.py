@@ -84,8 +84,10 @@ class PlayerDeck:
         return root
 
     def delete(self, card):
+        deleted = card
         self.root = self.recDelete(self.root, card)
         self.deckSize -= 1
+        return deleted
 
     def recDelete(self, root, card):
         if not root:
@@ -110,6 +112,7 @@ class PlayerDeck:
 
             temp = self.getMinValueNode(root.right)
             root.compID = temp.compID
+            root.card = temp.card
             root.right = self.recDelete(root.right, temp)
 
         if not root:
@@ -149,7 +152,7 @@ class PlayerDeck:
     def recInOrderTraversal(self, node, arr):
         if node:
             self.recInOrderTraversal(node.left, arr)
-            arr.append(node.card)
+            arr.append(node)
             self.recInOrderTraversal(node.right, arr)
 """
 playerTest = PlayerDeck()
@@ -159,10 +162,14 @@ for i in cards:
 testCard = cardNode(cards[1])
 print(playerTest.deckSize)
 testArr = playerTest.inOrderTraversal()
-print(testArr)
-print(testArr[0])
+for i in testArr:
+    print(i.compID, end=" ")
 print()
-playerTest.delete(testCard)
+print(testCard.compID)
+print()
+print(playerTest.delete(testCard).compID)
 print(playerTest.deckSize)
+testArr = playerTest.inOrderTraversal()
+for i in testArr:
+    print(i.compID, end=" ")
 """
-

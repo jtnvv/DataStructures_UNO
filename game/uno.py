@@ -50,22 +50,22 @@ class Uno():
         if self.game.RIGHT_KEY:
             match self.turno:
                 case 1:
-                    if self.select_card < self.deck1.size:
+                    if self.select_card < self.deck1.deckSize:
                         self.select_card += 1
                     else:
                         self.select_card = 1
                 case 2:
-                    if self.select_card < self.deck2.size:
+                    if self.select_card < self.deck2.deckSize:
                         self.select_card += 1
                     else:
                         self.select_card = 1
                 case 3:
-                    if self.select_card < self.deck3.size:
+                    if self.select_card < self.deck3.deckSize:
                         self.select_card += 1
                     else:
                         self.select_card = 1
                 case 4:
-                    if self.select_card < self.deck4.size:
+                    if self.select_card < self.deck4.deckSize:
                         self.select_card += 1
                     else:
                         self.select_card = 1
@@ -75,22 +75,22 @@ class Uno():
                     if self.select_card > 1:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck1.size
+                        self.select_card = self.deck1.deckSize
                 case 2:
                     if self.select_card > 1:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck2.size
+                        self.select_card = self.deck2.deckSize
                 case 3:
                     if self.select_card > 1:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck3.size
+                        self.select_card = self.deck3.deckSize
                 case 4:
                     if self.select_card > 1:
                         self.select_card -= 1
                     else:
-                        self.select_card = self.deck4.size
+                        self.select_card = self.deck4.deckSize
         if self.game.START_KEY:
             play = self.play_card()
             if play:
@@ -142,7 +142,7 @@ class Uno():
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
                             if j+1 == self.select_card:
@@ -153,7 +153,7 @@ class Uno():
                     else:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
                             pos_y = mazo_pos_y
@@ -171,7 +171,7 @@ class Uno():
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             rotated_carta = pygame.transform.rotate(carta, 90)
                             pos_y = mazo_pos_y - j * self.max_weight/3
@@ -183,7 +183,7 @@ class Uno():
                     else:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             rotated_carta = pygame.transform.rotate(carta, 90)
                             pos_y = mazo_pos_y - j * self.max_weight/3
@@ -201,7 +201,7 @@ class Uno():
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
                             if j+1 == self.select_card:
@@ -212,7 +212,7 @@ class Uno():
                     else:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             pos_x = mazo_pos_x + j * self.max_weight/3
                             pos_y = mazo_pos_y
@@ -230,7 +230,7 @@ class Uno():
                     if i == self.turno:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             rotated_carta = pygame.transform.rotate(carta, 270)
                             pos_y = mazo_pos_y + j * self.max_weight/3
@@ -242,7 +242,7 @@ class Uno():
                     else:
                         for j in range(sizedeck):
                             puntero = arr[j]
-                            carta = pygame.image.load(eval(puntero["image"]))
+                            carta = pygame.image.load(eval(puntero.card["image"]))
                             carta = pygame.transform.scale(carta, (self.max_weight, self.max_height))
                             rotated_carta = pygame.transform.rotate(carta, 270)
                             pos_y = mazo_pos_y + j * self.max_weight/3
@@ -256,6 +256,7 @@ class Uno():
         imagen_pos_x = (self.game.DISPLAY_W - self.max_weight) // 2
         imagen_pos_y = (self.game.DISPLAY_H - self.max_height) // 2
         self.game.display.blit(carta, (imagen_pos_x, imagen_pos_y))
+
     def draw_main_deck(self):
         ruta_imagen = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Cards','main_deck.png'))
         carta = pygame.image.load(ruta_imagen)
@@ -267,42 +268,43 @@ class Uno():
     def play_card(self):
         match self.turno:
             case 1:
-                puntero = self.deck1.head
-                for i in range(self.select_card - 1):
-                    puntero = puntero.next
-                if self.check_play_card(puntero.card):
-                    self.power_card(puntero.card)
-                    self.discard_deck.Enqueue(self.deck1.remove_card(puntero.card))
+                arr = self.deck1.inOrderTraversal()
+                for i in range(self.select_card):
+                    puntero = arr[i]
+                    print(type(puntero))
+                if self.check_play_card(puntero):
+                    self.power_card(puntero)
+                    self.discard_deck.Enqueue(self.deck1.delete(puntero.card))
                     return True
                 else:
                     return False
             case 2:
-                puntero = self.deck2.head
-                for i in range(self.select_card - 1):
-                    puntero = puntero.next
-                if self.check_play_card(puntero.card):
-                    self.power_card(puntero.card)
-                    self.discard_deck.Enqueue(self.deck2.remove_card(puntero.card))
+                arr = self.deck2.inOrderTraversal()
+                for i in range(self.select_card):
+                    puntero = arr[i]
+                if self.check_play_card(puntero):
+                    self.power_card(puntero)
+                    self.discard_deck.Enqueue(self.deck2.delete(puntero))
                     return True
                 else:
                     return False
             case 3:
-                puntero = self.deck3.head
-                for i in range(self.select_card - 1):
-                    puntero = puntero.next
-                if self.check_play_card(puntero.card):
-                    self.power_card(puntero.card)
-                    self.discard_deck.Enqueue(self.deck3.remove_card(puntero.card))
+                arr = self.deck3.inOrderTraversal()
+                for i in range(self.select_card):
+                    puntero = arr[i]
+                if self.check_play_card(puntero):
+                    self.power_card(puntero)
+                    self.discard_deck.Enqueue(self.deck3.delete(puntero))
                     return True
                 else:
                     return False
             case 4:
-                puntero = self.deck4.head
-                for i in range(self.select_card - 1):
-                    puntero = puntero.next
-                if self.check_play_card(puntero.card):
-                    self.power_card(puntero.card)
-                    self.discard_deck.Enqueue(self.deck4.remove_card(puntero.card))
+                arr = self.deck4.inOrderTraversal()
+                for i in range(self.select_card):
+                    puntero = arr[i]
+                if self.check_play_card(puntero):
+                    self.power_card(puntero)
+                    self.discard_deck.Enqueue(self.deck4.delete(puntero))
                     return True
                 else:
                     return False
@@ -363,14 +365,15 @@ class Uno():
 
     def take_card(self):
         card = self.main_deck.PopBack()
-        if self.turno == 1:
-            self.deck1.add_card(card)
-        elif self.turno == 2:
-            self.deck2.add_card(card)
-        elif self.turno == 3:
-            self.deck3.add_card(card)
-        elif self.turno == 4:
-            self.deck4.add_card(card)
+        match self.turno:
+            case 1:
+                self.deck1.insert(card)
+            case 2:
+                self.deck2.insert(card)
+            case 3:
+                self.deck3.insert(card)
+            case 4:
+                self.deck4.insert(card)
 
     def power_card(self,card):
         if "power" in card:
@@ -380,29 +383,29 @@ class Uno():
                 if self.reverse:
                     if self.turno == 1:
                         for i in range(2):
-                            self.deck4.add_card(self.main_deck.PopBack())
+                            self.deck4.insert(self.main_deck.PopBack())
                     elif self.turno == 2:
                         for i in range(2):
-                            self.deck1.add_card(self.main_deck.PopBack())
+                            self.deck1.insert(self.main_deck.PopBack())
                     elif self.turno == 3:
                         for i in range(2):
-                            self.deck2.add_card(self.main_deck.PopBack())
+                            self.deck2.insert(self.main_deck.PopBack())
                     elif self.turno == 4:
                         for i in range(2):
-                            self.deck3.add_card(self.main_deck.PopBack())
+                            self.deck3.insert(self.main_deck.PopBack())
                 else:
                     if self.turno == 1:
                         for i in range(2):
-                            self.deck2.add_card(self.main_deck.PopBack())
+                            self.deck2.insert(self.main_deck.PopBack())
                     elif self.turno == 2:
                         for i in range(2):
-                            self.deck3.add_card(self.main_deck.PopBack())
+                            self.deck3.insert(self.main_deck.PopBack())
                     elif self.turno == 3:
                         for i in range(2):
-                            self.deck4.add_card(self.main_deck.PopBack())
+                            self.deck4.insert(self.main_deck.PopBack())
                     elif self.turno == 4:
                         for i in range(2):
-                            self.deck1.add_card(self.main_deck.PopBack())
+                            self.deck1.insert(self.main_deck.PopBack())
 
             elif card["power"] == "Reverse":
                 self.reverse = not self.reverse
@@ -411,27 +414,27 @@ class Uno():
                 if self.reverse:
                     if self.turno == 1:
                         for i in range(4):
-                            self.deck4.add_card(self.main_deck.PopBack())
+                            self.deck4.insert(self.main_deck.PopBack())
                     elif self.turno == 2:
                         for i in range(4):
-                            self.deck1.add_card(self.main_deck.PopBack())
+                            self.deck1.insert(self.main_deck.PopBack())
                     elif self.turno == 3:
                         for i in range(4):
-                            self.deck2.add_card(self.main_deck.PopBack())
+                            self.deck2.insert(self.main_deck.PopBack())
                     elif self.turno == 4:
                         for i in range(4):
-                            self.deck3.add_card(self.main_deck.PopBack())
+                            self.deck3.insert(self.main_deck.PopBack())
                 else:
                     if self.turno == 1:
                         for i in range(4):
-                            self.deck2.add_card(self.main_deck.PopBack())
+                            self.deck2.insert(self.main_deck.PopBack())
                     elif self.turno == 2:
                         for i in range(4):
-                            self.deck3.add_card(self.main_deck.PopBack())
+                            self.deck3.insert(self.main_deck.PopBack())
                     elif self.turno == 3:
                         for i in range(4):
-                            self.deck4.add_card(self.main_deck.PopBack())
+                            self.deck4.insert(self.main_deck.PopBack())
                     elif self.turno == 4:
                         for i in range(4):
-                            self.deck1.add_card(self.main_deck.PopBack())
+                            self.deck1.insert(self.main_deck.PopBack())
                 
