@@ -8,6 +8,8 @@ class DiscardDeck:
     self.head = None
     self.tail = None
     self.num_cards = 0
+    self.currNum = None
+    self.currColor = None
 
   def is_empty(self):
     return self.head == None
@@ -44,6 +46,11 @@ class DiscardDeck:
       current_node = current_node.next
   
   def LastCardPlayed(self):
+    if "number" in self.tail.data:
+      self.currNum = self.tail.data["number"]
+    else:
+      self.currNum = 0
+    self.currColor = self.tail.data["color"]
     return self.tail.data
   
   def is_full(self):

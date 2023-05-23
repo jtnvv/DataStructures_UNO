@@ -329,11 +329,11 @@ class Uno():
         discardCard = self.discard_deck.LastCardPlayed()
         itCard = card.card
         if "number" in itCard and "number" in discardCard:
-            if itCard["number"] == discardCard["number"] or itCard["color"] == discardCard["color"]:
+            if itCard["number"] == self.discard_deck.currNum or itCard["color"] == self.discard_deck.currColor:
                 return True
             else:
                 return False
-        elif itCard["color"] == "Black" or itCard["color"] == discardCard["color"]:
+        elif itCard["color"] == "Black" or itCard["color"] == self.discard_deck.currColor:
             return True
         elif "power" in itCard and "power" in discardCard:
             if itCard["power"] == discardCard["power"]:
