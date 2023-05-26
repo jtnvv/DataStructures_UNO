@@ -84,7 +84,7 @@ class Uno():
                     self.change_turn()
                     self.change_turn()
                     self.block = False
-                if self.change:
+                elif self.change:
                     pass
                 else:
                     self.change_turn()
