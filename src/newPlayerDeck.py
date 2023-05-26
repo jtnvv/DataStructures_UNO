@@ -3,16 +3,17 @@ import os
 ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
 sys.path.append(ruta_carpeta1)
 import DatosDePrueba
-#Clase para las cartas como nodos de un AVL
-#El parámetro "card" debe ser una tupla del json de cartas
+
+#El parámetro "card" debe ser un tipo dict del json de cartas
 #NO ES UN NÚMERO
 class cardNode:
     def __init__(self, card):
+        #Variable card va a recibir toda la tupla del dict, o sea, el id, color, etc.
         self.card = card
         self.left = None
         self.right = None
         self.height = 1
-        #El compID es un identificador claro, el ID de la carta
+        #El compID es un número, o sea, el ID de la carta
         #Esto para lograr comparar pesos entre las cartas y balancear el arbol
         self.compID = card["id"]
 
@@ -51,13 +52,17 @@ class PlayerDeck:
         return nLeft
 
     #Insert de forma recursiva
+    #el parámetro card es un tipo DICT, no cardNode
     def insert(self,card):
-      self.root = self.recInsert(self.root,card)
-      self.deckSize += 1
+        self.root = self.recInsert(self.root,card)
+        self.deckSize += 1
 
     def recInsert(self, root, card):
         if not root:
             return cardNode(card)
+        
+        #Aquí utilizamos el card["id"] porque no se ha creado el cardNode
+        #Comparamos directamente con el id del dict, no el compID
         elif card["id"] < root.compID:
             root.left = self.recInsert(root.left, card)
         else:
@@ -90,7 +95,7 @@ class PlayerDeck:
     def recDelete(self, root, card):
         if not root:
             return root
-
+        #Para estas comparaciones, utilizamos el compID para comparar los pesos de las cartas
         elif card.compID < root.compID:
             root.left = self.recDelete(root.left, card)
 
@@ -141,9 +146,11 @@ class PlayerDeck:
             current = current.left
         return current
 
+    #Va a recorrer en orden el arbol y va a meter en un arreglo esos valores
     def inOrderTraversal(self):
         interfaceArray = []
         self.recInOrderTraversal(self.root, interfaceArray)
+        #Retorna ese arreglo con los elementos en orden
         return interfaceArray
 
 
@@ -152,6 +159,7 @@ class PlayerDeck:
             self.recInOrderTraversal(node.left, arr)
             arr.append(node)
             self.recInOrderTraversal(node.right, arr)
+
 """
 playerTest = PlayerDeck()
 cards = DatosDePrueba.data_array

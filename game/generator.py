@@ -7,22 +7,26 @@ sys.path.append(ruta_carpeta1)
 import mainDeck, discardDeck, newPlayerDeck
 
 class Generator():
-    def MainDeck(self,main_deck):
-        deckTest = mainDeck.MainDeck(len(main_deck))
-        for i in main_deck:
-            deckTest.PushBack(i)
-        deckTest.DeckShuffle()
-        return deckTest
+    #Genera el MainDeck
+    def MainDeck(self,dataArray):
+        mainDeck1 = mainDeck.MainDeck(len(dataArray))
+        for i in dataArray:
+            mainDeck1.PushBack(i)
+        mainDeck1.DeckShuffle()
+        return mainDeck1
     
     def DiscardDeck(self,main_deck):
-        deckTest = discardDeck.DiscardDeck()
+        discDeck = discardDeck.DiscardDeck()
+        #El PopBack retorna la última carta
         card = main_deck.PopBack()
-        if card["color"] == "Black":
-            deckTest.Enqueue(card)
-            deckTest.Enqueue(main_deck.PopBack())
+        #Al principio del juego, evita que la primera carta sea
+        #un poder
+        if "power" in card:
+            discDeck.Enqueue(card)
+            discDeck.Enqueue(main_deck.PopBack())
         else:
-            deckTest.Enqueue(card)
-        return deckTest
+            discDeck.Enqueue(card)
+        return discDeck
 
     def PlayerDeck(self,main_deck):
         player_deck = newPlayerDeck.PlayerDeck()

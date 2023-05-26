@@ -8,14 +8,14 @@ from end_screen import *
 class Game():
     def __init__(self):
         pygame.init()
-        self.volumen = 100
+        self.volumen = 50
         monitor_info = pygame.display.Info()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.RIGHT_KEY, self.LEFT_KEY = False, False
         self.K1, self.K2, self.K3, self.K4 = False, False, False, False
         self.DISPLAY_W, self.DISPLAY_H = monitor_info.current_w, monitor_info.current_h
-        #self.DISPLAY_W, self.DISPLAY_H = 480, 270
+        #self.DISPLAY_W, self.DISPLAY_H = 480, 270 para dimensión fija
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H),pygame.FULLSCREEN)
         ruta_capeta_font = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'fonts'))

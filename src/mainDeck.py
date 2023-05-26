@@ -1,4 +1,5 @@
 import random
+#MainDeck es un array clásico
 class MainDeck:
   def __init__(self,capacity):
     self.capacity = capacity
@@ -35,6 +36,8 @@ class MainDeck:
       self.lista[0] = key
       self.list_size += 1
 
+  #DeckShuffle va iterando todo el arreglo y con el random
+  #va intercambiando elementos entre los índices
   def DeckShuffle(self):
     for i in range(self.list_size):
       index = random.randint(0,self.list_size-1)
