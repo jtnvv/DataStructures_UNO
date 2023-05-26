@@ -8,16 +8,16 @@ from end_screen import *
 class Game():
     def __init__(self):
         pygame.init()
-        self.volumen = 50
+        self.volumen = 30
         monitor_info = pygame.display.Info()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.RIGHT_KEY, self.LEFT_KEY = False, False
         self.K1, self.K2, self.K3, self.K4 = False, False, False, False
         self.DISPLAY_W, self.DISPLAY_H = monitor_info.current_w, monitor_info.current_h
-        #self.DISPLAY_W, self.DISPLAY_H = 480, 270 para dimensión fija
+        #self.DISPLAY_W, self.DISPLAY_H = 480, 270 #para dimensión fija
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
-        self.window = pygame.display.set_mode((self.DISPLAY_W,self.DISPLAY_H),pygame.FULLSCREEN)
+        self.window = pygame.display.set_mode(( self.DISPLAY_W, self.DISPLAY_H))
         ruta_capeta_font = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'fonts'))
         self.font_name = os.path.join(ruta_capeta_font,'8-BIT WONDER.TTF')
         self.BLACK, self.WHITE, self.RED = (0, 0, 0), (255, 255, 255), (255, 0, 0)
@@ -62,13 +62,13 @@ class Game():
                     self.LEFT_KEY = True
                 if event.key == pygame.K_UP:
                     self.UP_KEY = True
-                if event.key == pygame.K_KP1:
+                if event.key == pygame.K_KP1 or event.key == pygame.K_1:
                     self.K1 = True
-                if event.key == pygame.K_KP2:
+                if event.key == pygame.K_KP2 or event.key == pygame.K_2:
                     self.K2 = True
-                if event.key == pygame.K_KP3:
+                if event.key == pygame.K_KP3 or event.key == pygame.K_3:
                     self.K3 = True
-                if event.key == pygame.K_KP4:
+                if event.key == pygame.K_KP4 or event.key == pygame.K_4:
                     self.K4 = True
 
     def reset_keys(self):
@@ -100,3 +100,14 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
+
+    def draw_image_centery(self, ruta, size,x):
+        imagen = pygame.image.load(ruta)
+        width, height = imagen.get_size()
+        w_redimensionado = width*size
+        h_redimensionado = height*size
+        new_width = int(w_redimensionado*(self.DISPLAY_W)/17000)
+        new_height = int(h_redimensionado*(self.DISPLAY_H)/10000)
+        imagen_redimensionada = pygame.transform.scale(imagen, (new_width, new_height))
+        img_y = (self.DISPLAY_H - new_height) // 2
+        self.display.blit(imagen_redimensionada, (x,img_y))

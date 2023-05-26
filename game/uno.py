@@ -26,7 +26,7 @@ class Uno():
         self.max_height = self.game.DISPLAY_H/5
         self.reverse = False
         self.block = False
-
+        self.change = False
     
     def display_game(self):
         self.run_display = True
@@ -38,6 +38,7 @@ class Uno():
             self.draw_decks()
             self.draw_discard_deck()
             self.draw_main_deck()
+            self.change_color() #revisar si se ha jugado un cambio de color para dibujar las opciones para cambiar el color
             self.check_winner()
             self.dt = self.clock.tick(60) / 1000
             self.blit_screen()
@@ -83,24 +84,39 @@ class Uno():
                     self.change_turn()
                     self.change_turn()
                     self.block = False
+                if self.change:
+                    pass
                 else:
                     self.change_turn()
+
+        #cuando se ha jugado una carta de cambio de color
+        if self.change:        
+            if self.game.K1:
+                card = {"color":"Yellow","image":"os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Cards','yellow','yellow_card.png'))"}
+                self.discard_deck.Enqueue(card)
+                self.change_turn()
+                self.change = False
+            if self.game.K2:
+                card = {"color":"Blue","image":"os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Cards','blue','blue_card.png'))"}
+                self.discard_deck.Enqueue(card)
+                self.change_turn()
+                self.change = False
+            if self.game.K3:
+                card = {"color":"Red","image":"os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Cards','red','red_card.png'))"}
+                self.discard_deck.Enqueue(card)
+                self.change_turn()
+                self.change = False
+            if self.game.K4:
+                card = {"color":"Green","image":"os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Cards','green','green_card.png'))"}
+                self.discard_deck.Enqueue(card)
+                self.change_turn()
+                self.change = False
+
         if self.game.UP_KEY:
             self.take_card()
             self.change_turn()
 
-        if self.game.K1:
-            self.discard_deck.currColor = "Red"
-            print(self.discard_deck.currColor)
-        if self.game.K2:
-            self.discard_deck.currColor = "Blue"
-            print(self.discard_deck.currColor)
-        if self.game.K3:
-            self.discard_deck.currColor = "Green"
-            print(self.discard_deck.currColor)
-        if self.game.K4:
-            self.discard_deck.currColor = "Yellow"
-            print(self.discard_deck.currColor)
+            
 
     def change_turn(self):
         if self.reverse: 
@@ -132,7 +148,7 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = (self.game.DISPLAY_W / 2) - (mazo_width/2)
                     mazo_pos_y = (self.game.DISPLAY_H - self.offsety) - mazo_height
-                    if i == self.turno:
+                    if i == self.turno and self.change == False:
                         for j in range(sizedeck):
                             puntero = arr[j]
                             carta = pygame.image.load(eval(puntero.card["image"]))
@@ -160,7 +176,7 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = self.game.DISPLAY_W - (self.offsetx + mazo_height)
                     mazo_pos_y = (self.game.DISPLAY_H/2) + (mazo_width/6)
-                    if i == self.turno:
+                    if i == self.turno and self.change == False:
                         for j in range(sizedeck):
                             puntero = arr[j]
                             carta = pygame.image.load(eval(puntero.card["image"]))
@@ -190,7 +206,7 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = (self.game.DISPLAY_W/2) - (mazo_width/2)
                     mazo_pos_y = self.offsety
-                    if i == self.turno:
+                    if i == self.turno and self.change == False:
                         for j in range(sizedeck):
                             puntero = arr[j]
                             carta = pygame.image.load(eval(puntero.card["image"]))
@@ -219,7 +235,7 @@ class Uno():
                     mazo_height = self.max_height
                     mazo_pos_x = self.offsetx
                     mazo_pos_y = (self.game.DISPLAY_H/2) - (mazo_width/6)
-                    if i == self.turno:
+                    if i == self.turno and self.change == False:
                         for j in range(sizedeck):
                             puntero = arr[j]
                             carta = pygame.image.load(eval(puntero.card["image"]))
@@ -406,8 +422,11 @@ class Uno():
             elif itCard["power"] == "Reverse":
                 self.reverse = not self.reverse
 
-            elif itCard["power"] == "+4":
+            elif itCard["power"] == "change_color":
+                self.change = True
 
+            elif itCard["power"] == "+4":
+                self.change = True
                 if self.reverse:
                     match self.turno:
                          case 0:
@@ -437,3 +456,22 @@ class Uno():
                             for i in range(4):
                                 self.deck1.insert(self.main_deck.PopBack())
                 
+    def change_color(self):
+        if self.change:
+            font_size_text = int((self.game.DISPLAY_W + self.game.DISPLAY_H)/100)
+            ruta_fondo = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'icono'))
+            fondo = (os.path.join(ruta_fondo,'recuadro.png'))
+            cor_x = self.game.DISPLAY_W//2 + self.game.DISPLAY_W//10
+            self.game.draw_image_centery(fondo,10,cor_x)
+
+            text_x, text_y = 14*self.game.DISPLAY_W/20 + self.game.DISPLAY_W/100, 4*self.game.DISPLAY_H/10
+            offset = self.game.DISPLAY_H/20
+            self.game.draw_text("Presione",font_size_text,text_x,text_y)
+            self.game.draw_text("1 Amarillo",font_size_text,text_x,text_y + offset)
+            self.game.draw_text("2 Azul",font_size_text,text_x,text_y + 2*offset)
+            self.game.draw_text("3 Rojo",font_size_text,text_x,text_y + 3*offset)
+            self.game.draw_text("4 Verde",font_size_text,text_x,text_y + 4*offset)
+
+            
+
+
