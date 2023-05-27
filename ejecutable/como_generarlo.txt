@@ -1,0 +1,7 @@
+-instalar pyinstaller
+pip install pyinstaller
+
+-generar el archivo ejecutable
+pyinstaller --onefile --add-data "game;game" --add-data "data;data" --add-data "src;src" main.py
+
+*en --add-data "" se agrega las carpetas que usan el UNO
