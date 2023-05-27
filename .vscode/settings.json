@@ -1,5 +1,7 @@
 {
     "python.analysis.extraPaths": [
-        "./data"
+        "./data",
+        "./game",
+        "./src"
     ]
 }
