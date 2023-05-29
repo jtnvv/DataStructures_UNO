@@ -187,5 +187,5 @@ class CreditosMenu(Menu):
             self.game.draw_text('Gabriel Delgado', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*2)
             self.game.draw_text('Juan Ovalle', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*3)
             self.game.draw_text('David Velasquez', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*4)
-            self.game.draw_text('Jonathan Veloza', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*5)
+            self.game.draw_text('Jonathan Velosa', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*5)
             self.blit_screen()
