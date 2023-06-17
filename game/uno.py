@@ -358,7 +358,6 @@ class Uno():
         p=31
         x = 8
         hash = 0
-        print(attribute)
         for i in range(len(attribute)-1,-1, -1):
             hash = (hash*x+ord(attribute[i]))%p
         return hash    
