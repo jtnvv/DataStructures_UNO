@@ -353,19 +353,28 @@ class Uno():
                         if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                             self.game.playing = False
                             self.run_display = False
-        
+
+    def polyHash(self,attribute):
+        p=31
+        x = 8
+        hash = 0
+        print(attribute)
+        for i in range(len(attribute)-1,-1, -1):
+            hash = (hash*x+ord(attribute[i]))%p
+        return hash    
+    
     def check_play_card(self,card):
         discardCard = self.discard_deck.LastCardPlayed()
         itCard = card.card
         if "number" in itCard and "number" in discardCard:
-            if itCard["number"] == self.discard_deck.currNum or itCard["color"] == self.discard_deck.currColor:
+            if itCard["number"] == self.discard_deck.currNum or self.polyHash(itCard["color"]) == self.polyHash(self.discard_deck.currColor):
                 return True
             else:
                 return False
-        elif itCard["color"] == "Black" or itCard["color"] == self.discard_deck.currColor:
+        elif self.polyHash(itCard["color"]) == self.polyHash("Black") or self.polyHash(itCard["color"]) == self.polyHash(self.discard_deck.currColor):
             return True
         elif "power" in itCard and "power" in discardCard:
-            if itCard["power"] == discardCard["power"]:
+            if self.polyHash(itCard["power"]) == self.polyHash(discardCard["power"]):
                 return True
             else:
                 return False
@@ -387,9 +396,9 @@ class Uno():
     def power_card(self,card):
         itCard = card.card
         if "power" in itCard:
-            if itCard["power"] == "Block":
+            if self.polyHash(itCard["power"]) == self.polyHash("Block"):
                 self.block = not self.block
-            elif itCard["power"] == "+2":
+            elif self.polyHash(itCard["power"]) == self.polyHash("+2"):
                 if self.reverse:
                     match self.turno:
                         case 0:
@@ -419,13 +428,13 @@ class Uno():
                             for i in range(2):
                                 self.deck1.insert(self.main_deck.PopBack())
 
-            elif itCard["power"] == "Reverse":
+            elif self.polyHash(itCard["power"]) == self.polyHash("Reverse"):
                 self.reverse = not self.reverse
 
-            elif itCard["power"] == "change_color":
+            elif self.polyHash(itCard["power"]) == self.polyHash("change_color"):
                 self.change = True
 
-            elif itCard["power"] == "+4":
+            elif self.polyHash(itCard["power"]) == self.polyHash("+4"):
                 self.change = True
                 if self.reverse:
                     match self.turno:
