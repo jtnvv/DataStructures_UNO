@@ -42,5 +42,5 @@ class Generator():
         deck2 = self.PlayerDeck(main_deck)
         deck3 = self.PlayerDeck(main_deck)
         deck4 = self.PlayerDeck(main_deck)
+        print(main_deck)
         return main_deck, discard_deck, deck1, deck2, deck3, deck4
-

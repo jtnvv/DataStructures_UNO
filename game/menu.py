@@ -51,7 +51,7 @@ class MainMenu(Menu):
             self.game.check_events()
             self.check_input()
             self.game.display.fill(self.game.BLACK)
-            ruta_logo = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'icono'))
+            ruta_logo = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'Icono'))
             logo = (os.path.join(ruta_logo,'logo.png'))
             self.game.draw_image_centerx(logo,1,self.posicion)
             #self.game.draw_text('UNO', self.game.font_size_title, self.game.DISPLAY_W / 2, self.posicion)
