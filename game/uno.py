@@ -136,7 +136,7 @@ class Uno():
     def play_music(self):
         self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
         self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'nice.mp3'))
-        pygame.mixer.music.set_volume(int(self.game.volumen)/10)
+        pygame.mixer.music.set_volume(float(self.game.volumen)/100)
         pygame.mixer.music.play()
 
     def draw_decks(self):

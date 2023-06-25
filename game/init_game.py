@@ -12,7 +12,7 @@ from hashScore import Scoreboard
 class Game():
     def __init__(self):
         pygame.init()
-        self.volumen = 30
+        self.volumen = 10
         monitor_info = pygame.display.Info()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False

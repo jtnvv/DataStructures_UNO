@@ -29,7 +29,7 @@ class Menu():
         nombre_cancion = "Mi Canción Favorita"
         pygame.mixer.music.set_endevent(pygame.USEREVENT)
         pygame.event.post(pygame.event.Event(pygame.USEREVENT, {"name": nombre_cancion}))     
-        pygame.mixer.music.set_volume(int(self.game.volumen)/100)
+        pygame.mixer.music.set_volume(float(self.game.volumen)/100)
         pygame.mixer.music.play()
 
 class MainMenu(Menu):
