@@ -26,15 +26,7 @@ class Scoreboard:
             name = i
             count = self.victory[self.polyHash(i)]
             print(name, count, sep=" ")
-            
 
-score = Scoreboard()
-start = time.time()
-for i in range(10000): 
-    score.win("Gabriel")
-end = time.time()
-delta = end-start
-print(delta)
 
 """
 score.win("Francisco")

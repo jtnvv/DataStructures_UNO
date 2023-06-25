@@ -1,9 +1,12 @@
 import pygame
-import os
+import sys, os
 from menu import *
 from uno import *
 from load_screen import *
 from end_screen import *
+ruta_carpeta1 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(ruta_carpeta1)
+from hashScore import Scoreboard
 
 
 class Game():
@@ -23,6 +26,7 @@ class Game():
         self.font_name = os.path.join(ruta_capeta_font,'8-BIT WONDER.TTF')
         self.BLACK, self.WHITE, self.RED = (0, 0, 0), (255, 255, 255), (255, 0, 0)
         self.main_menu = MainMenu(self)
+        self.scores = Marcadores(self)
         self.optiones = OptionesMenu(self)
         self.creditos = CreditosMenu(self)
         self.curr_menu = self.main_menu
@@ -30,6 +34,7 @@ class Game():
         self.font_size_title = int((self.DISPLAY_W + self.DISPLAY_H)/40)
         self.font_size_cursor = int((self.DISPLAY_W + self.DISPLAY_H)/70)
         self.ruta_musica = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'music'))
+        self.marcadores = Scoreboard()
         #self.musica = pygame.mixer.music.load(os.path.join(self.ruta_musica,'main_menu.mp3'))
         #pygame.mixer.music.set_volume(self.volumen/100)
         #pygame.mixer.music.play(-1)
@@ -112,3 +117,15 @@ class Game():
         imagen_redimensionada = pygame.transform.scale(imagen, (new_width, new_height))
         img_y = (self.DISPLAY_H - new_height) // 2
         self.display.blit(imagen_redimensionada, (x,img_y))
+
+    def draw_image_center(self, ruta, size):
+        imagen = pygame.image.load(ruta)
+        width, height = imagen.get_size()
+        w_redimensionado = width*size
+        h_redimensionado = height*size
+        new_width = int(w_redimensionado*(self.DISPLAY_W)/17000)
+        new_height = int(h_redimensionado*(self.DISPLAY_H)/10000)
+        imagen_redimensionada = pygame.transform.scale(imagen, (new_width, new_height))
+        img_y = (self.DISPLAY_H - new_height) // 2
+        img_x = (self.DISPLAY_W - new_width) // 2
+        self.display.blit(imagen_redimensionada, (img_x,img_y))

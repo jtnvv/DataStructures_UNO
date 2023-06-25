@@ -1,5 +1,6 @@
 import pygame
 import sys, os
+
 from generator import Generator
 
 class Uno():
@@ -14,6 +15,7 @@ class Uno():
         self.size_deck = 0
         self.turno = 0
         self.players = 4
+        
         generador = Generator()
         self.deck_data = generador.generator()
         self.main_deck = self.deck_data[0]
@@ -317,42 +319,9 @@ class Uno():
                     return False
                 
     def check_winner(self):
-        if self.deck1.deckSize == 0:
-            self.game.draw_center_text("Jugador 1 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
-            self.blit_screen()
-            while self.game.playing:
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
-                            self.game.playing = False
-                            self.run_display = False
-        elif self.deck2.deckSize == 0:
-            self.game.draw_center_text("Jugador 2 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
-            self.blit_screen()
-            while self.game.playing:
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
-                            self.game.playing = False
-                            self.run_display = False
-        elif self.deck3.deckSize == 0:
-            self.game.draw_center_text("Jugador 3 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
-            self.blit_screen()
-            while self.game.playing:
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
-                            self.game.playing = False
-                            self.run_display = False
-        elif self.deck4.deckSize == 0:
-            self.game.draw_center_text("Jugador 4 Gana", self.game.font_size_title, self.game.DISPLAY_W/2,self.game.DISPLAY_H/2)
-            self.blit_screen()
-            while self.game.playing:
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
-                            self.game.playing = False
-                            self.run_display = False
+        if self.deck1.deckSize == 0 or self.deck2.deckSize == 0 or self.deck3.deckSize == 0 or self.deck4.deckSize == 0:
+            self.draw_winner()
+
                               
     def check_play_card(self,card):
         discardCard = self.discard_deck.LastCardPlayed()
@@ -472,6 +441,28 @@ class Uno():
             self.game.draw_text("3 Rojo",font_size_text,text_x,text_y + 3*offset)
             self.game.draw_text("4 Verde",font_size_text,text_x,text_y + 4*offset)
 
-            
+    def draw_winner(self):
+        nombre_jugador = ""
+        while self.game.playing:
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN and nombre_jugador != "":
+                            self.game.playing = False
+                            self.run_display = False
+                            self.game.marcadores.win(nombre_jugador)
+                        elif event.key == pygame.K_BACKSPACE:
+                            nombre_jugador = nombre_jugador[:-1]
+                        else:
+                            nombre_jugador += event.unicode
+                font_size_text = int((self.game.DISPLAY_W + self.game.DISPLAY_H)/100)
+                ruta_fondo = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'game', 'icono'))
+                fondo = (os.path.join(ruta_fondo,'recuadro.png'))
+                self.game.draw_image_center(fondo,14)
+                text_x, text_y = 10*self.game.DISPLAY_W/20 , self.game.DISPLAY_H/2
+                offset = self.game.DISPLAY_H/20
+                self.game.draw_text("GANASTE",font_size_text,text_x,text_y - 2*offset)
+                self.game.draw_text("Ingresa tu nombre",font_size_text,text_x,text_y)
+                self.game.draw_text(nombre_jugador,font_size_text,text_x,text_y + offset)
+                self.blit_screen()
 
 

@@ -8,7 +8,7 @@ class Menu():
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - self.game.DISPLAY_W // 6
-        self.posicion = self.game.DISPLAY_H // 8
+        self.posicion = self.game.DISPLAY_H // 9
         self.offset_creditos = self.game.DISPLAY_H // 15
         self.offset2 = - self.game.DISPLAY_W // 4
         self.offset3 = - self.game.DISPLAY_W // 6
@@ -37,9 +37,10 @@ class MainMenu(Menu):
         Menu.__init__(self, game)
         self.state = "Un Jugador"
         self.singleplayer_x, self.singleplayer_y = self.mid_w, self.posicion*4
-        self.optiones_x, self.optiones_y = self.mid_w, self.posicion*5
-        self.creditos_x, self.creditos_y = self.mid_w, self.posicion*6
-        self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*7
+        self.marcadores_x, self.marcadores_y = self.mid_w, self.posicion*5
+        self.optiones_x, self.optiones_y = self.mid_w, self.posicion*6
+        self.creditos_x, self.creditos_y = self.mid_w, self.posicion*7
+        self.cerrar_x, self.cerrar_y = self.mid_w, self.posicion*8
         self.cursor_rect.midtop = (self.singleplayer_x + self.offset, self.singleplayer_y)
          
 
@@ -56,6 +57,7 @@ class MainMenu(Menu):
             self.game.draw_image_centerx(logo,1,self.posicion)
             #self.game.draw_text('UNO', self.game.font_size_title, self.game.DISPLAY_W / 2, self.posicion)
             self.game.draw_text("Un Jugador", self.game.font_size_text, self.singleplayer_x, self.singleplayer_y)
+            self.game.draw_text("Marcadores", self.game.font_size_text, self.marcadores_x, self.marcadores_y)
             self.game.draw_text("Opciones", self.game.font_size_text, self.optiones_x, self.optiones_y)
             self.game.draw_text("Creditos", self.game.font_size_text, self.creditos_x, self.creditos_y)
             self.game.draw_text("Salir", self.game.font_size_text, self.cerrar_x, self.cerrar_y)
@@ -67,6 +69,9 @@ class MainMenu(Menu):
     def move_cursor(self):
         if self.game.DOWN_KEY:
             if self.state == 'Un Jugador':
+                self.cursor_rect.midtop = (self.marcadores_x + self.offset, self.marcadores_y)
+                self.state = 'Marcadores'
+            elif self.state == 'Marcadores':
                 self.cursor_rect.midtop = (self.optiones_x + self.offset, self.optiones_y)
                 self.state = 'Opciones'
             elif self.state == 'Opciones':
@@ -84,6 +89,9 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.cerrar_x + self.offset, self.cerrar_y)
                 self.state = 'Salir'
             elif self.state == 'Opciones':
+                self.cursor_rect.midtop = (self.marcadores_x + self.offset, self.marcadores_y)
+                self.state = 'Marcadores'
+            elif self.state == 'Marcadores':
                 self.cursor_rect.midtop = (self.singleplayer_x + self.offset, self.singleplayer_y)
                 self.state = 'Un Jugador'
             elif self.state == 'Creditos':
@@ -99,6 +107,8 @@ class MainMenu(Menu):
         if self.game.START_KEY:
             if self.state == 'Un Jugador':
                 self.game.playing = True
+            elif self.state == 'Marcadores':
+                self.game.curr_menu = self.game.scores
             elif self.state == 'Opciones':
                 self.game.curr_menu = self.game.optiones
             elif self.state == 'Creditos':
@@ -188,4 +198,29 @@ class CreditosMenu(Menu):
             self.game.draw_text('Juan Ovalle', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*3)
             self.game.draw_text('David Velasquez', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*4)
             self.game.draw_text('Jonathan Velosa', self.size_author, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + self.offset_creditos*5)
+            self.blit_screen()
+
+class Marcadores(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.size_text = int(self.game.DISPLAY_H/15)
+    def display_menu(self):
+        self.run_display = True
+        nombres = self.game.marcadores.names
+        victorias = self.game.marcadores.victory
+        offset = self.game.DISPLAY_H/10
+        contador = 1
+        self.game.display.fill(self.game.BLACK)
+        self.game.draw_text('Marcadores', self.game.font_size_title, self.game.DISPLAY_W / 2, self.game.DISPLAY_H/6)
+        for i in nombres:
+                name = i
+                count = victorias[self.game.marcadores.polyHash(i)]
+                self.game.draw_text(str(name), self.size_text, self.game.DISPLAY_W/2.5,self.game.DISPLAY_H/6 + (contador * offset))
+                self.game.draw_text(str(count), self.size_text, self.game.DISPLAY_W/2.5 + self.game.DISPLAY_W/4,self.game.DISPLAY_H/6 + (contador * offset))
+                contador += 1
+        while self.run_display:
+            self.game.check_events()
+            if self.game.START_KEY or self.game.BACK_KEY:
+                self.game.curr_menu = self.game.main_menu
+                self.run_display = False
             self.blit_screen()
