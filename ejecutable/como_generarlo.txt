@@ -5,3 +5,8 @@ pip install pyinstaller
 pyinstaller --onefile --add-data "game;game" --add-data "data;data" --add-data "src;src" main.py
 
 *en --add-data "" se agrega las carpetas que usan el UNO
+
+si no sirve por el error "not module named 'json'"
+pyinstaller main.spec
+
+ese archivo ya especifica que se importe el modulo 'json'
