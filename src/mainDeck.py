@@ -1,63 +1,50 @@
 import random
 
 class MainDeck:
-    def __init__(self, capacity):
-        self.capacity = capacity
-        self.lista = []
-        self.list_size = 0
+  def __init__(self,capacity):
+    self.capacity = capacity
+    self.lista = [None]*capacity
+    self.list_size = 0
 
-    def Full(self):
-        return self.capacity == self.list_size
+  def Full(self):
+    return self.capacity == self.list_size
 
-    def Empty(self):
-        return self.list_size == 0
+  def Empty(self):
+    return self.list_size==0
 
-    def PushBack(self, key):
-        if self.Full():
-            return print("Baraja Completa")
-        else:
-            self.lista.append(key)
-            self.list_size += 1
+  def PushBack(self,key):
+    if self.Full():
+      return print("Baraja Completa")
+    else:
+      self.lista[self.list_size] = key
+      self.list_size += 1
 
-    def PopBack(self):
-        if self.Empty():
-            return print("Baraja Vacía")
-        else:
-            item = self.lista.pop()
-            self.list_size -= 1
-            return item
+  def PopBack(self):
+    item = self.lista[self.list_size-1]
+    self.lista[self.list_size-1]=None
+    self.list_size -=1
+    if self.list_size < 0:
+      self.list_size=0
+    return item
 
-    def PushFront(self, key):
-        if self.Full():
-            return print("Baraja Completa")
-        else:
-            self.lista.insert(0, key)
-            self.list_size += 1
+  def PushFront(self,key):
+    if self.Full():
+      return print("Baraja Completa")
+    else :
+      for i in range(self.list_size,0,-1):
+        self.lista[i] = self.lista[i-1]
+      self.lista[0] = key
+      self.list_size += 1
 
-    def AddEdge(self, key1, key2):
-        if key1 in self.lista and key2 in self.lista:
-            # No se implementa en esta versión del código
-            pass
-        else:
-            return print("Cartas no encontradas en la baraja principal")
+  #DeckShuffle va iterando todo el arreglo y con el random
+  #va intercambiando elementos entre los índices
+  def DeckShuffle(self):
+    for i in range(self.list_size):
+      index = random.randint(0,self.list_size-1)
+      self.lista[i], self.lista[index] = self.lista[index], self.lista[i]
 
-    def GetNeighbors(self, key):
-        if key in self.lista:
-            # No se implementa en esta versión del código
-            pass
-        else:
-            return print("Carta no encontrada en la baraja principal")
+  def DeckPrint(self):
+    for i in range(self.list_size):
+      print(self.lista[i], end=" ")
 
-    def RemoveEdge(self, key1, key2):
-        if key1 in self.lista and key2 in self.lista:
-            # No se implementa en esta versión del código
-            pass
-        else:
-            return print("Cartas no encontradas en la baraja principal")
 
-    def DeckShuffle(self):
-        random.shuffle(self.lista)
-
-    def DeckPrint(self):
-        for key in self.lista:
-            print(key, end=" ")
